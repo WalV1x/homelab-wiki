@@ -246,17 +246,36 @@
       border: 1px solid rgba(255,255,255,0.05);
       margin-top: 3rem;
       background: var(--surface);
+      position: relative;
     }
 
     .media-container img {
       width: 100%;
       height: auto;
       display: block;
-      opacity: 0.8;
+      opacity: 0.6;
       transition: opacity 0.5s ease;
     }
 
     .media-container:hover img { opacity: 1; }
+
+    .image-caption {
+      position: absolute;
+      bottom: 0;
+      left: 0;
+      right: 0;
+      padding: 1.5rem;
+      background: linear-gradient(to top, rgba(0,0,0,0.9), transparent);
+      color: var(--text-main);
+      font-size: 0.9rem;
+      font-weight: 500;
+      opacity: 0;
+      transition: opacity 0.3s ease;
+    }
+
+    .media-container:hover .image-caption {
+      opacity: 1;
+    }
 
     .arch-svg { padding: 3rem; }
     .arch-svg text { fill: var(--text-muted); font-weight: 500; }
@@ -339,11 +358,12 @@
     <!-- ARCHITECTURE -->
     <section id="architecture">
       <div class="reveal">
-        <span class="eyebrow">Conception</span>
+        <span class="eyebrow">Conception & Hyperviseur</span>
         <h2>Architecture logique.</h2>
         <p class="lead">Ma démarche pour isoler le réseau privé et sécuriser l'exposition de certains services sur internet.</p>
       </div>
       
+      <!-- Schéma SVG -->
       <div class="media-container arch-svg reveal delay-1">
         <svg viewBox="0 0 900 420" role="img">
           <defs>
@@ -389,12 +409,18 @@
           </g>
         </svg>
       </div>
+
+      <!-- Image Proxmox -->
+      <div class="media-container reveal delay-2">
+        <img src="./asset/pve_dashboard.png" alt="Interface de gestion Proxmox VE">
+        <div class="image-caption">L'interface centrale de mon hyperviseur Proxmox, montrant l'état des ressources matérielles et mes différents conteneurs actifs.</div>
+      </div>
     </section>
 
     <!-- SERVICES -->
     <section id="services" class="section-left">
       <div class="reveal">
-        <span class="eyebrow">Administration système</span>
+        <span class="eyebrow">Administration système & Réseau</span>
         <h2>Les services que j'héberge.</h2>
         <p class="body-text">J'ai fait le choix de virtualiser chaque outil dans des conteneurs LXC indépendants afin de compartimenter les pannes et d'optimiser les ressources de mon serveur.</p>
       </div>
@@ -407,24 +433,20 @@
         </div>
         <div class="bento-card reveal delay-1">
           <span class="tag green">Protégé par VPN</span>
-          <h3>Nginx Proxy Manager</h3>
-          <p>Le point d'entrée de mon réseau. Il me permet d'apprendre à gérer des flux, des hôtes virtuels et de configurer des certificats SSL Let's Encrypt.</p>
-        </div>
-        <div class="bento-card reveal delay-2">
-          <span class="tag green">Protégé par VPN</span>
           <h3>Proxmox Backup Server</h3>
           <p>Ma solution de sauvegarde. Je l'ai configurée pour effectuer des sauvegardes incrémentales et dédupliquées de mes machines virtuelles.</p>
         </div>
-        <div class="bento-card reveal">
+        <div class="bento-card reveal delay-2">
           <span class="tag green">Protégé par VPN</span>
-          <h3>Immich</h3>
-          <p>Une alternative à Google Photos que j'auto-héberge. Cela me permet de tester la gestion de stockage intensif et le traitement d'images par IA locale.</p>
+          <h3>Immich & Utilitaires</h3>
+          <p>Hébergement d'une alternative à Google Photos, d'outils de suivi réseau (Speedtest) et d'un gestionnaire de fichiers distant sécurisé.</p>
         </div>
-        <div class="bento-card reveal delay-1">
-          <span class="tag green">Protégé par VPN</span>
-          <h3>Speedtest-tracker</h3>
-          <p>Un outil automatisé que j'ai mis en place pour générer un historique de la stabilité et du débit de ma connexion internet.</p>
-        </div>
+      </div>
+
+      <!-- Image NPM (Réseau) -->
+      <div class="media-container reveal" style="margin-top: 2rem;">
+        <img src="./asset/npm_dashboard.png" alt="Tableau de bord Nginx Proxy Manager">
+        <div class="image-caption">Configuration de Nginx Proxy Manager : gestion du routage DNS et génération automatisée de certificats SSL Let's Encrypt.</div>
       </div>
     </section>
 
@@ -460,8 +482,10 @@
         <p class="body-text">J'utilise l'API de Proxmox couplée à <strong>Beszel</strong> pour monitorer la santé de ma machine au quotidien (CPU, RAM, état des disques, températures).</p>
       </div>
 
+      <!-- Image Beszel -->
       <div class="media-container reveal delay-1" style="background: #000; padding-top: 1rem;">
-        <img src="https://raw.githubusercontent.com/WalV1x/homelab-wiki/refs/heads/main/dashboard-beszel.png" alt="Capture d'écran de mon dashboard Beszel">
+        <img src="./asset/monitor_dashboard.png" alt="Tableau de bord de monitoring Beszel">
+        <div class="image-caption">Surveillance en temps réel des charges système, du réseau et de l'espace disque via Beszel.</div>
       </div>
     </section>
 
