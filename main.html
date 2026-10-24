@@ -1,409 +1,385 @@
-<!DOCTYPE html>
+<!doctype html>
 <html lang="fr">
 <head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Homelab Proxmox - Portfolio</title>
-    
-    <!-- Google Fonts : Inter -->
-    <link rel="preconnect" href="https://fonts.googleapis.com">
-    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
-
-    <style>
-        /* Variables par défaut (Thème clair) */
-        :root {
-            --bg-color: #f9fafb;
-            --text-color: #111827;
-            --text-muted: #4b5563;
-            --card-bg: #ffffff;
-            --border-color: #e5e7eb;
-            --accent-color: #0284c7;
-            --accent-hover: #0369a1;
-            --tag-public-bg: #fee2e2;
-            --tag-public-text: #991b1b;
-            --tag-vpn-bg: #dcfce7;
-            --tag-vpn-text: #166534;
-        }
-
-        /* Thème sombre automatique */
-        @media (prefers-color-scheme: dark) {
-            :root {
-                --bg-color: #111827;
-                --text-color: #f9fafb;
-                --text-muted: #9ca3af;
-                --card-bg: #1f2937;
-                --border-color: #374151;
-                --accent-color: #38bdf8;
-                --accent-hover: #7dd3fc;
-                --tag-public-bg: #7f1d1d;
-                --tag-public-text: #fecaca;
-                --tag-vpn-bg: #14532d;
-                --tag-vpn-text: #bbf7d0;
-            }
-        }
-
-        * {
-            box-sizing: border-box;
-            margin: 0;
-            padding: 0;
-        }
-
-        body {
-            font-family: 'Inter', sans-serif;
-            background-color: var(--bg-color);
-            color: var(--text-color);
-            line-height: 1.6;
-            padding: 2rem 1rem;
-        }
-
-        .container {
-            max-width: 900px;
-            margin: 0 auto;
-        }
-
-        header {
-            border-bottom: 1px solid var(--border-color);
-            padding-bottom: 2rem;
-            margin-bottom: 2.5rem;
-        }
-
-        h1 {
-            font-size: 2.25rem;
-            font-weight: 700;
-            margin-bottom: 0.5rem;
-        }
-
-        .tagline {
-            font-size: 1.125rem;
-            color: var(--text-muted);
-            margin-bottom: 1rem;
-        }
-
-        .context {
-            font-size: 1rem;
-            margin-bottom: 1.5rem;
-        }
-
-        a {
-            color: var(--accent-color);
-            text-decoration: none;
-            font-weight: 500;
-        }
-
-        a:hover {
-            color: var(--accent-hover);
-            text-decoration: underline;
-        }
-
-        section {
-            margin-bottom: 3.5rem;
-        }
-
-        h2 {
-            font-size: 1.5rem;
-            font-weight: 600;
-            margin-bottom: 1.5rem;
-            border-bottom: 1px solid var(--border-color);
-            padding-bottom: 0.5rem;
-        }
-
-        h3 {
-            font-size: 1.25rem;
-            font-weight: 600;
-            margin-bottom: 0.75rem;
-        }
-
-        /* Grille des services */
-        .grid {
-            display: grid;
-            grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
-            gap: 1.5rem;
-        }
-
-        .card {
-            background-color: var(--card-bg);
-            border: 1px solid var(--border-color);
-            border-radius: 8px;
-            padding: 1.5rem;
-        }
-
-        .card-header {
-            display: flex;
-            justify-content: space-between;
-            align-items: center;
-            margin-bottom: 0.75rem;
-        }
-
-        .card-title {
-            font-weight: 600;
-            font-size: 1.1rem;
-        }
-
-        .tag {
-            font-size: 0.75rem;
-            font-weight: 600;
-            padding: 0.25rem 0.5rem;
-            border-radius: 9999px;
-            text-transform: uppercase;
-        }
-
-        .tag-public {
-            background-color: var(--tag-public-bg);
-            color: var(--tag-public-text);
-        }
-
-        .tag-vpn {
-            background-color: var(--tag-vpn-bg);
-            color: var(--tag-vpn-text);
-        }
-
-        .card-desc {
-            color: var(--text-muted);
-            font-size: 0.95rem;
-        }
-
-        /* Listes */
-        ul {
-            list-style-type: disc;
-            padding-left: 1.5rem;
-            color: var(--text-muted);
-        }
-
-        ul li {
-            margin-bottom: 0.5rem;
-        }
-
-        /* Conteneur image / placeholder */
-        .screenshot-placeholder {
-            width: 100%;
-            height: 300px;
-            background-color: var(--card-bg);
-            border: 2px dashed var(--border-color);
-            border-radius: 8px;
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            color: var(--text-muted);
-            margin-top: 1.5rem;
-            text-align: center;
-        }
-
-        /* SVG Architecture */
-        .svg-container {
-            width: 100%;
-            background-color: var(--card-bg);
-            border: 1px solid var(--border-color);
-            border-radius: 8px;
-            padding: 1rem;
-            overflow-x: auto;
-        }
-
-        .incident-block {
-            background-color: var(--card-bg);
-            border-left: 4px solid var(--accent-color);
-            padding: 1.5rem;
-            border-radius: 0 8px 8px 0;
-        }
-
-        .incident-block p {
-            margin-bottom: 0.5rem;
-        }
-
-        .label {
-            font-weight: 600;
-            color: var(--text-color);
-        }
-
-        @media (max-width: 640px) {
-            h1 { font-size: 1.75rem; }
-            .grid { grid-template-columns: 1fr; }
-        }
-    </style>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <meta name="description" content="Présentation du homelab personnel Proxmox : services, architecture, sécurité, supervision et apprentissages.">
+  <title>Homelab Proxmox — [Votre nom]</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=DM+Mono:wght@400;500&family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
+  <style>
+    :root {
+      color-scheme: light dark;
+      --bg: #f4f6f8;
+      --surface: #ffffff;
+      --surface-alt: #edf1f5;
+      --text: #17212b;
+      --muted: #5d6a77;
+      --line: #d7dee6;
+      --accent: #2764d8;
+      --accent-soft: #e5edff;
+      --good: #24764c;
+      --good-soft: #e2f4e9;
+      --warn: #8a5a12;
+      --warn-soft: #fff1d7;
+      --shadow: 0 12px 34px rgba(22, 35, 50, .06);
+      --radius: 16px;
+    }
+    @media (prefers-color-scheme: dark) {
+      :root {
+        --bg: #10151b;
+        --surface: #171e26;
+        --surface-alt: #202a35;
+        --text: #edf2f7;
+        --muted: #a3b0be;
+        --line: #303c49;
+        --accent: #8bb3ff;
+        --accent-soft: #202f4a;
+        --good: #8dd6a9;
+        --good-soft: #1b3528;
+        --warn: #f1c477;
+        --warn-soft: #3b2d19;
+        --shadow: 0 12px 34px rgba(0, 0, 0, .16);
+      }
+    }
+    * { box-sizing: border-box; }
+    html { scroll-behavior: smooth; }
+    body {
+      margin: 0;
+      background: var(--bg);
+      color: var(--text);
+      font-family: Inter, system-ui, sans-serif;
+      line-height: 1.65;
+      -webkit-font-smoothing: antialiased;
+    }
+    a { color: var(--accent); text-underline-offset: 3px; }
+    a:focus-visible, button:focus-visible { outline: 3px solid var(--accent); outline-offset: 3px; }
+    .wrap { width: min(1080px, calc(100% - 40px)); margin: 0 auto; }
+    .topbar { border-bottom: 1px solid var(--line); }
+    .topbar-inner {
+      min-height: 68px; display: flex; align-items: center; justify-content: space-between;
+      gap: 18px;
+    }
+    .brand { font-size: .88rem; font-weight: 700; letter-spacing: .04em; }
+    .brand span { color: var(--muted); font-weight: 500; }
+    nav { display: flex; flex-wrap: wrap; gap: 18px; font-size: .83rem; }
+    nav a { color: var(--muted); text-decoration: none; }
+    nav a:hover { color: var(--text); }
+    .hero { padding: 78px 0 54px; }
+    .eyebrow {
+      display: inline-flex; align-items: center; gap: 9px; color: var(--accent);
+      font: 500 .76rem "DM Mono", monospace; text-transform: uppercase; letter-spacing: .1em;
+    }
+    .eyebrow::before { content: ""; width: 22px; height: 1px; background: currentColor; }
+    h1 { margin: 18px 0 16px; font-size: clamp(2.5rem, 6vw, 4.8rem); line-height: 1.04; letter-spacing: -.055em; }
+    .hero p { max-width: 690px; margin: 0; color: var(--muted); font-size: clamp(1rem, 2vw, 1.16rem); }
+    .hero-actions { display: flex; flex-wrap: wrap; gap: 12px; margin-top: 28px; }
+    .button {
+      display: inline-flex; align-items: center; justify-content: center; gap: 9px;
+      min-height: 43px; padding: 10px 15px; border: 1px solid var(--line); border-radius: 9px;
+      background: var(--surface); color: var(--text); font-size: .88rem; font-weight: 600; text-decoration: none;
+    }
+    .button.primary { background: var(--accent); color: #fff; border-color: var(--accent); }
+    @media (prefers-color-scheme: dark) { .button.primary { color: #10151b; } }
+    .meta-strip { display: flex; flex-wrap: wrap; gap: 10px; margin-top: 35px; }
+    .meta-chip { border: 1px solid var(--line); border-radius: 999px; padding: 6px 11px; color: var(--muted); font-size: .78rem; background: var(--surface); }
+    main { padding-bottom: 60px; }
+    section { padding: 36px 0; scroll-margin-top: 24px; }
+    .section-head { display: grid; grid-template-columns: 48px 1fr; gap: 16px; margin-bottom: 22px; align-items: start; }
+    .section-no { color: var(--accent); font: 500 .8rem "DM Mono", monospace; padding-top: 8px; }
+    h2 { margin: 0; font-size: clamp(1.45rem, 3vw, 2rem); letter-spacing: -.035em; line-height: 1.2; }
+    .section-intro { margin: 8px 0 0; color: var(--muted); max-width: 700px; font-size: .96rem; }
+    .panel { background: var(--surface); border: 1px solid var(--line); border-radius: var(--radius); box-shadow: var(--shadow); }
+    .architecture { padding: 22px; overflow: hidden; }
+    .architecture svg { display: block; width: 100%; height: auto; }
+    .diagram-note { display: flex; flex-wrap: wrap; gap: 10px 20px; margin-top: 16px; color: var(--muted); font-size: .82rem; }
+    .legend { display: inline-flex; align-items: center; gap: 8px; }
+    .legend i { width: 10px; height: 10px; border-radius: 3px; background: var(--accent); display: inline-block; }
+    .legend.vpn i { background: var(--good); }
+    .services-grid { display: grid; grid-template-columns: repeat(2, minmax(0, 1fr)); gap: 13px; }
+    .service { padding: 18px; min-width: 0; }
+    .service-top { display: flex; align-items: flex-start; justify-content: space-between; gap: 12px; }
+    .service h3 { margin: 0; font-size: 1rem; letter-spacing: -.02em; overflow-wrap: anywhere; }
+    .service p { color: var(--muted); font-size: .88rem; margin: 8px 0 15px; }
+    .status { display: inline-block; flex-shrink: 0; padding: 4px 8px; border-radius: 999px; font-size: .69rem; font-weight: 700; }
+    .status.private { color: var(--good); background: var(--good-soft); }
+    .status.public { color: var(--warn); background: var(--warn-soft); }
+    .service-foot { padding-top: 12px; border-top: 1px solid var(--line); color: var(--muted); font: .72rem "DM Mono", monospace; }
+    .security-grid { display: grid; grid-template-columns: repeat(2, minmax(0, 1fr)); gap: 12px; }
+    .security-item { display: flex; gap: 13px; align-items: flex-start; padding: 17px; background: var(--surface); border: 1px solid var(--line); border-radius: 12px; }
+    .check { color: var(--good); font-weight: 700; font-size: 1.05rem; line-height: 1.5; }
+    .security-item strong { display: block; font-size: .92rem; }
+    .security-item span:last-child { display: block; color: var(--muted); font-size: .82rem; margin-top: 3px; }
+    .monitor-layout { display: grid; grid-template-columns: .85fr 1.15fr; gap: 16px; }
+    .monitor-copy { padding: 22px; }
+    .monitor-copy h3 { margin: 0 0 8px; font-size: 1rem; }
+    .monitor-copy p { margin: 0; color: var(--muted); font-size: .9rem; }
+    .tag-row { display: flex; flex-wrap: wrap; gap: 7px; margin-top: 17px; }
+    .tag { background: var(--surface-alt); color: var(--muted); padding: 5px 8px; border-radius: 6px; font: .72rem "DM Mono", monospace; }
+    .dashboard-shot { margin: 0; min-width: 0; overflow: hidden; align-self: start; background: var(--surface); border: 1px solid var(--line); border-radius: var(--radius); box-shadow: var(--shadow); }
+    .dashboard-shot img { display: block; width: 100%; height: auto; }
+    .dashboard-shot figcaption { padding: 11px 14px; color: var(--muted); font-size: .78rem; border-top: 1px solid var(--line); }
+    .incident { padding: 22px; }
+    .incident-row { display: grid; grid-template-columns: 100px 1fr; gap: 15px; padding: 13px 0; border-bottom: 1px solid var(--line); }
+    .incident-row:last-child { border-bottom: 0; padding-bottom: 0; }
+    .incident-row:first-child { padding-top: 0; }
+    .incident-label { font: 500 .74rem "DM Mono", monospace; text-transform: uppercase; color: var(--muted); padding-top: 3px; }
+    .incident-row p { margin: 0; font-size: .92rem; }
+    code { font-family: "DM Mono", monospace; font-size: .9em; background: var(--surface-alt); border-radius: 4px; padding: 2px 5px; }
+    .next-grid { display: grid; grid-template-columns: repeat(2, minmax(0, 1fr)); gap: 13px; }
+    .next-card { padding: 21px; }
+    .next-card .step { font: .72rem "DM Mono", monospace; color: var(--accent); }
+    .next-card h3 { margin: 9px 0 7px; font-size: 1rem; }
+    .next-card p { margin: 0; color: var(--muted); font-size: .88rem; }
+    .learning { padding: 24px; }
+    .learning p { margin: 0; max-width: 820px; font-size: .96rem; }
+    .placeholder { color: var(--muted); background: var(--surface-alt); padding: 1px 5px; border-radius: 4px; }
+    footer { border-top: 1px solid var(--line); padding: 24px 0 35px; color: var(--muted); font-size: .8rem; }
+    .footer-inner { display: flex; justify-content: space-between; flex-wrap: wrap; gap: 10px; }
+    @media (max-width: 680px) {
+      .wrap { width: min(100% - 28px, 1080px); }
+      .topbar-inner { align-items: flex-start; flex-direction: column; padding: 15px 0; gap: 9px; }
+      nav { gap: 12px; }
+      .hero { padding: 53px 0 35px; }
+      section { padding: 27px 0; }
+      .section-head { grid-template-columns: 32px 1fr; gap: 10px; }
+      .services-grid, .security-grid, .monitor-layout, .next-grid { grid-template-columns: 1fr; }
+      .architecture { padding: 12px; }
+      .incident { padding: 17px; }
+      .incident-row { grid-template-columns: 1fr; gap: 4px; }
+      .dashboard-shot { width: 100%; }
+    }
+    @media (prefers-reduced-motion: reduce) { html { scroll-behavior: auto; } }
+  </style>
 </head>
 <body>
+  <header class="topbar">
+    <div class="wrap topbar-inner">
+      <div class="brand">HOMELAB <span>/ INFRASTRUCTURE</span></div>
+      <nav aria-label="Navigation principale">
+        <a href="#architecture">Architecture</a>
+        <a href="#services">Services</a>
+        <a href="#securite">Sécurité</a>
+        <a href="#supervision">Supervision</a>
+        <a href="#apprentissages">Apprentissages</a>
+      </nav>
+    </div>
+  </header>
 
-<div class="container">
-    <header>
-        <h1>Homelab Proxmox</h1>
-        <p class="tagline">Infrastructure personnelle conçue pour l'hébergement de services, la gestion de données et l'apprentissage de l'administration système.</p>
-        <p class="context">
-            Étudiant en informatique de gestion à la HEG-Genève. Recherche d'un emploi étudiant ou d'un stage en support, systèmes et réseaux.<br>
-            <a href="[Lien LinkedIn à compléter]" target="_blank" rel="noopener noreferrer">Consulter mon profil LinkedIn</a>
-        </p>
-    </header>
+  <div class="wrap">
+    <div class="hero">
+      <div class="eyebrow">Projet personnel · Infrastructure IT</div>
+      <h1>Homelab<br>Proxmox</h1>
+      <p>
+        Un environnement personnel pour expérimenter la virtualisation, l’administration de services,
+        la supervision et les accès distants. Étudiant en informatique de gestion à la HEG-Genève,
+        je cherche une opportunité étudiante ou un stage en support IT, systèmes ou réseaux.
+      </p>
+      <div class="hero-actions">
+        <a class="button primary" href="https://www.linkedin.com/in/lndr/" target="_blank" rel="noopener noreferrer">Mon LinkedIn ↗</a>
+        <a class="button" href="#architecture">Explorer l’infrastructure ↓</a>
+      </div>
+      <div class="meta-strip" aria-label="Domaines abordés">
+        <span class="meta-chip">Proxmox VE</span>
+        <span class="meta-chip">Conteneurs LXC</span>
+        <span class="meta-chip">Réseau & accès distant</span>
+        <span class="meta-chip">Sauvegarde & supervision</span>
+      </div>
+    </div>
 
     <main>
-        <section id="architecture">
-            <h2>Architecture Réseau et Système</h2>
-            <div class="svg-container">
-                <svg viewBox="0 0 800 450" width="100%" height="100%" xmlns="http://www.w3.org/2000/svg">
-                    <defs>
-                        <!-- Flèche pour les connexions -->
-                        <marker id="arrow" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="6" markerHeight="6" orient="auto-start-reverse">
-                            <path d="M 0 0 L 10 5 L 0 10 z" fill="currentColor" />
-                        </marker>
-                    </defs>
+      <section id="architecture">
+        <div class="section-head">
+          <div class="section-no">01 /</div>
+          <div><h2>Architecture</h2><p class="section-intro">Vue logique des composants et des chemins d’accès. Les détails réseau sensibles ne sont pas publiés.</p></div>
+        </div>
+        <div class="panel architecture">
+          <svg viewBox="0 0 900 420" role="img" aria-labelledby="arch-title arch-desc">
+            <title id="arch-title">Schéma logique du homelab Proxmox</title>
+            <desc id="arch-desc">Internet passe par Cloudflare DNS puis Nginx Proxy Manager pour atteindre les conteneurs LXC sur Proxmox. Tailscale fournit un accès distant par VPN.</desc>
+            <defs>
+              <marker id="arrow" markerWidth="8" markerHeight="8" refX="6" refY="3" orient="auto"><path d="M0,0 L6,3 L0,6 Z" fill="#7890a8"/></marker>
+              <marker id="arrowGreen" markerWidth="8" markerHeight="8" refX="6" refY="3" orient="auto"><path d="M0,0 L6,3 L0,6 Z" fill="#299565"/></marker>
+            </defs>
+            <g font-family="Inter, sans-serif" text-anchor="middle">
+              <rect x="20" y="34" width="160" height="66" rx="11" fill="#e8edf4" stroke="#b7c4d3"/>
+              <text x="100" y="62" font-size="14" font-weight="700" fill="#17212b">Internet</text>
+              <text x="100" y="81" font-size="11" fill="#5d6a77">Accès public</text>
 
-                    <style>
-                        .svg-text { fill: currentColor; font-family: 'Inter', sans-serif; font-size: 14px; font-weight: 500; }
-                        .svg-title { fill: currentColor; font-family: 'Inter', sans-serif; font-size: 16px; font-weight: 600; }
-                        .svg-box { fill: transparent; stroke: currentColor; stroke-width: 2; rx: 6; }
-                        .svg-box-host { fill: transparent; stroke: currentColor; stroke-width: 2; stroke-dasharray: 5,5; rx: 8; }
-                        .svg-line { stroke: currentColor; stroke-width: 2; }
-                    </style>
+              <rect x="230" y="34" width="180" height="66" rx="11" fill="#e5edff" stroke="#8daee9"/>
+              <text x="320" y="62" font-size="14" font-weight="700" fill="#17212b">Cloudflare DNS</text>
+              <text x="320" y="81" font-size="11" fill="#405775">Résolution DNS</text>
 
-                    <!-- Ligne Internet vers Cloudflare -->
-                    <line x1="120" y1="90" x2="220" y2="90" class="svg-line" marker-end="url(#arrow)" />
-                    <!-- Ligne Cloudflare vers Proxy -->
-                    <line x1="380" y1="90" x2="470" y2="90" class="svg-line" marker-end="url(#arrow)" />
-                    <!-- Ligne Proxy vers Jeux -->
-                    <line x1="550" y1="120" x2="550" y2="180" class="svg-line" marker-end="url(#arrow)" />
-                    <!-- Ligne Tailscale vers Host -->
-                    <line x1="120" y1="290" x2="430" y2="290" class="svg-line" marker-end="url(#arrow)" />
+              <rect x="460" y="34" width="205" height="66" rx="11" fill="#e5edff" stroke="#8daee9"/>
+              <text x="562" y="61" font-size="14" font-weight="700" fill="#17212b">Nginx Proxy Manager</text>
+              <text x="562" y="81" font-size="11" fill="#405775">Reverse proxy</text>
 
-                    <!-- Internet -->
-                    <rect x="20" y="60" width="100" height="60" class="svg-box" />
-                    <text x="70" y="95" text-anchor="middle" class="svg-text">Internet</text>
+              <rect x="715" y="34" width="165" height="66" rx="11" fill="#e2f4e9" stroke="#8dc7a5"/>
+              <text x="797" y="61" font-size="14" font-weight="700" fill="#17212b">Conteneurs LXC</text>
+              <text x="797" y="81" font-size="11" fill="#315c44">Services hébergés</text>
 
-                    <!-- Cloudflare DNS -->
-                    <rect x="230" y="60" width="140" height="60" class="svg-box" />
-                    <text x="300" y="95" text-anchor="middle" class="svg-text">Cloudflare DNS</text>
+              <path d="M180 67 H225" stroke="#7890a8" stroke-width="2" fill="none" marker-end="url(#arrow)"/>
+              <path d="M410 67 H455" stroke="#7890a8" stroke-width="2" fill="none" marker-end="url(#arrow)"/>
+              <path d="M665 67 H710" stroke="#7890a8" stroke-width="2" fill="none" marker-end="url(#arrow)"/>
 
-                    <!-- Hôte Proxmox -->
-                    <rect x="440" y="20" width="340" height="400" class="svg-box-host" />
-                    <text x="610" y="45" text-anchor="middle" class="svg-title">Hôte Proxmox</text>
+              <rect x="230" y="175" width="435" height="92" rx="13" fill="none" stroke="#7890a8" stroke-width="1.5" stroke-dasharray="6 5"/>
+              <text x="447" y="202" font-size="11" font-weight="700" letter-spacing="1.3" fill="#5d6a77">HÔTE DE VIRTUALISATION</text>
+              <rect x="257" y="216" width="381" height="34" rx="7" fill="#202a35"/>
+              <text x="447" y="238" font-size="14" font-weight="700" fill="#ffffff">Proxmox VE</text>
+              <path d="M797 101 V146 H638 V232" stroke="#7890a8" stroke-width="1.7" stroke-dasharray="5 5" fill="none" marker-end="url(#arrow)"/>
+              <text x="727" y="137" font-size="10" fill="#5d6a77">Hébergement</text>
 
-                    <!-- Nginx Proxy Manager -->
-                    <rect x="470" y="60" width="160" height="60" class="svg-box" />
-                    <text x="550" y="95" text-anchor="middle" class="svg-text">Nginx Proxy Manager</text>
+              <rect x="20" y="305" width="260" height="77" rx="11" fill="#e2f4e9" stroke="#8dc7a5"/>
+              <text x="150" y="333" font-size="14" font-weight="700" fill="#17212b">Accès distant</text>
+              <text x="150" y="354" font-size="12" fill="#315c44">VPN Tailscale</text>
+              <text x="150" y="369" font-size="10" fill="#315c44">Accès aux services privés</text>
 
-                    <!-- Conteneurs LXC -->
-                    <rect x="470" y="190" width="280" height="200" class="svg-box" />
-                    <text x="610" y="215" text-anchor="middle" class="svg-title">Conteneurs LXC</text>
-                    
-                    <text x="490" y="250" class="svg-text">• Pelican (Serveurs de jeux)</text>
-                    <text x="490" y="280" class="svg-text">• Immich (Photos)</text>
-                    <text x="490" y="310" class="svg-text">• Filebrowser</text>
-                    <text x="490" y="340" class="svg-text">• Supervision & Backups</text>
-                    <text x="490" y="370" class="svg-text">• ...</text>
+              <path d="M280 343 H350 V267" stroke="#299565" stroke-width="2" fill="none" marker-end="url(#arrowGreen)"/>
+              <text x="365" y="318" font-size="11" fill="#299565" text-anchor="start">Connexion privée</text>
 
-                    <!-- Tailscale VPN -->
-                    <rect x="20" y="260" width="100" height="60" class="svg-box" />
-                    <text x="70" y="295" text-anchor="middle" class="svg-text">Tailscale VPN</text>
-                    
-                    <text x="140" y="280" class="svg-text">Accès distant</text>
-                    <text x="140" y="300" class="svg-text">sécurisé (Admin)</text>
-                </svg>
-            </div>
-        </section>
+              <rect x="480" y="305" width="400" height="77" rx="11" fill="#f1f3f6" stroke="#c5ced8"/>
+              <text x="680" y="333" font-size="13" font-weight="700" fill="#17212b">Règle d’exposition</text>
+              <text x="680" y="354" font-size="12" fill="#4d5a67">Serveurs de jeux : publics</text>
+              <text x="680" y="370" font-size="12" fill="#4d5a67">Autres services : VPN</text>
+            </g>
+            <style>
+              @media (prefers-color-scheme: dark) {
+                rect[fill="#e8edf4"], rect[fill="#e5edff"], rect[fill="#e2f4e9"], rect[fill="#f1f3f6"] { fill: #202a35; stroke: #526273; }
+                text[fill="#17212b"] { fill: #edf2f7; }
+                text[fill="#5d6a77"], text[fill="#405775"], text[fill="#315c44"], text[fill="#4d5a67"] { fill: #a3b0be; }
+              }
+            </style>
+          </svg>
+          <div class="diagram-note">
+            <span class="legend"><i></i> Chemin d’accès public</span>
+            <span class="legend vpn"><i></i> Accès distant privé par VPN</span>
+          </div>
+        </div>
+      </section>
 
-        <section id="services">
-            <h2>Services Hébergés</h2>
-            <div class="grid">
-                <div class="card">
-                    <div class="card-header">
-                        <span class="card-title">Nginx Proxy Manager</span>
-                        <span class="tag tag-public">Public</span>
-                    </div>
-                    <div class="card-desc">Reverse proxy gérant le routage du trafic entrant vers les services exposés.</div>
-                </div>
+      <section id="services">
+        <div class="section-head">
+          <div class="section-no">02 /</div>
+          <div><h2>Services hébergés</h2><p class="section-intro">Chaque service répond à un besoin concret de stockage, d’exploitation ou de maintenance.</p></div>
+        </div>
+        <div class="services-grid">
+          <article class="panel service">
+            <div class="service-top"><h3>speedtest-tracker</h3><span class="status private">VPN uniquement</span></div>
+            <p>Suivi de la vitesse de connexion au fil du temps.</p><div class="service-foot">MESURE · CONNECTIVITÉ</div>
+          </article>
+          <article class="panel service">
+            <div class="service-top"><h3>filebrowser</h3><span class="status private">VPN uniquement</span></div>
+            <p>Interface de gestion et de navigation dans les fichiers.</p><div class="service-foot">FICHIERS · ACCÈS PRIVÉ</div>
+          </article>
+          <article class="panel service">
+            <div class="service-top"><h3>pelican-panel + pelican-wings</h3><span class="status public">Jeux exposés</span></div>
+            <p>Gestion et exécution des serveurs de jeux, notamment Satisfactory via Pelican.</p><div class="service-foot">HÉBERGEMENT DE JEUX</div>
+          </article>
+          <article class="panel service">
+            <div class="service-top"><h3>nginxproxymanager</h3><span class="status private">VPN uniquement</span></div>
+            <p>Reverse proxy pour organiser l’accès aux services publiés.</p><div class="service-foot">RÉSEAU · PROXY</div>
+          </article>
+          <article class="panel service">
+            <div class="service-top"><h3>beszel</h3><span class="status private">VPN uniquement</span></div>
+            <p>Supervision et consultation des métriques de l’infrastructure.</p><div class="service-foot">OBSERVABILITÉ</div>
+          </article>
+          <article class="panel service">
+            <div class="service-top"><h3>proxmox-backup-server</h3><span class="status private">VPN uniquement</span></div>
+            <p>Gestion des sauvegardes de l’environnement Proxmox.</p><div class="service-foot">SAUVEGARDE · RESTAURATION</div>
+          </article>
+          <article class="panel service">
+            <div class="service-top"><h3>immich</h3><span class="status private">VPN uniquement</span></div>
+            <p>Stockage et consultation de la photothèque personnelle.</p><div class="service-foot">PHOTOS · STOCKAGE</div>
+          </article>
+        </div>
+        <p class="section-intro" style="margin-top:13px">L’accès aux services autres que les serveurs de jeux se fait par VPN Tailscale.</p>
+      </section>
 
-                <div class="card">
-                    <div class="card-header">
-                        <span class="card-title">Pelican Panel & Wings</span>
-                        <span class="tag tag-public">Public</span>
-                    </div>
-                    <div class="card-desc">Interface de gestion, déploiement et hébergement de serveurs de jeux isolés.</div>
-                </div>
+      <section id="securite">
+        <div class="section-head">
+          <div class="section-no">03 /</div>
+          <div><h2>Sécurité & maintenance</h2><p class="section-intro">Mesures appliquées pour limiter les accès non souhaités et maintenir les services.</p></div>
+        </div>
+        <div class="security-grid">
+          <div class="security-item"><span class="check">✓</span><div><strong>Fail2ban</strong><span>Protection contre certaines tentatives répétées d’authentification.</span></div></div>
+          <div class="security-item"><span class="check">✓</span><div><strong>Authentification TOTP</strong><span>Deuxième facteur d’authentification.</span></div></div>
+          <div class="security-item"><span class="check">✓</span><div><strong>SSH root désactivé</strong><span>Connexion SSH directe en root désactivée.</span></div></div>
+          <div class="security-item"><span class="check">✓</span><div><strong>Mises à jour automatiques</strong><span>Maintien à jour des composants configurés pour les recevoir.</span></div></div>
+          <div class="security-item"><span class="check">✓</span><div><strong>Proxmox Backup Server</strong><span>Sauvegardes centralisées pour faciliter la restauration.</span></div></div>
+          <div class="security-item"><span class="check">✓</span><div><strong>Accès privé par VPN</strong><span>Les interfaces des services privés ne sont pas exposées publiquement.</span></div></div>
+        </div>
+      </section>
 
-                <div class="card">
-                    <div class="card-header">
-                        <span class="card-title">Immich</span>
-                        <span class="tag tag-vpn">VPN</span>
-                    </div>
-                    <div class="card-desc">Solution de stockage, sauvegarde et d'organisation de photographies personnelles.</div>
-                </div>
+      <section id="supervision">
+        <div class="section-head">
+          <div class="section-no">04 /</div>
+          <div><h2>Supervision & métriques</h2><p class="section-intro">Suivre l’état de l’environnement aide à repérer les anomalies et à comprendre l’utilisation des ressources.</p></div>
+        </div>
+        <div class="monitor-layout">
+          <div class="panel monitor-copy">
+            <h3>Outils de suivi</h3>
+            <p><strong>Beszel</strong> sert à consulter les métriques de supervision. L’<strong>API Proxmox</strong> permet également de récupérer des informations sur l’environnement Proxmox.</p>
+            <div class="tag-row"><span class="tag">Beszel</span><span class="tag">API Proxmox</span><span class="tag">Métriques</span></div>
+            <p style="margin-top:18px">Métriques suivies : <span class="placeholder">[à compléter selon les données réellement collectées]</span></p>
+          </div>
+          <figure class="dashboard-shot">
+            <img src="https://raw.githubusercontent.com/WalV1x/homelab-wiki/refs/heads/main/dashboard-beszel.png"
+			</figure>
+        </div>
+      </section>
 
-                <div class="card">
-                    <div class="card-header">
-                        <span class="card-title">Proxmox Backup Server</span>
-                        <span class="tag tag-vpn">VPN</span>
-                    </div>
-                    <div class="card-desc">Gestion des sauvegardes incrémentielles et de la rétention des données de l'hyperviseur.</div>
-                </div>
+      <section id="incident">
+        <div class="section-head">
+          <div class="section-no">05 /</div>
+          <div><h2>Incident résolu</h2><p class="section-intro">Diagnostic et correction d’un problème de compatibilité sur un serveur Minecraft.</p></div>
+        </div>
+        <div class="panel incident">
+          <div class="incident-row"><div class="incident-label">Symptôme</div><p>Le serveur Minecraft plantait au démarrage ou pendant son exécution.</p></div>
+          <div class="incident-row"><div class="incident-label">Cause</div><p>Incompatibilité avec Java 25 dans l’environnement du serveur.</p></div>
+          <div class="incident-row"><div class="incident-label">Solution</div><p>Passage à Java 21 LTS, puis vérification du fonctionnement du serveur.</p></div>
+        </div>
+      </section>
 
-                <div class="card">
-                    <div class="card-header">
-                        <span class="card-title">Beszel</span>
-                        <span class="tag tag-vpn">VPN</span>
-                    </div>
-                    <div class="card-desc">Supervision des ressources système, collecte de métriques et alertes de performance.</div>
-                </div>
+      <section id="etapes">
+        <div class="section-head">
+          <div class="section-no">06 /</div>
+          <div><h2>Prochaines étapes</h2><p class="section-intro">Faire évoluer le homelab vers une infrastructure familiale plus structurée.</p></div>
+        </div>
+        <div class="next-grid">
+          <article class="panel next-card">
+            <div class="step">ÉVOLUTION 01</div><h3>NAS personnel</h3>
+            <p>Mettre en place un stockage centralisé pour les photos et les fichiers de la famille, avec une approche adaptée aux sauvegardes et aux accès.</p>
+          </article>
+          <article class="panel next-card">
+            <div class="step">ÉVOLUTION 02</div><h3>Segmentation réseau</h3>
+            <p>Étudier la mise en place de VLAN avec un switch administrable et un pare-feu pfSense ou OPNsense afin de séparer les usages et les services.</p>
+          </article>
+        </div>
+      </section>
 
-                <div class="card">
-                    <div class="card-header">
-                        <span class="card-title">Filebrowser</span>
-                        <span class="tag tag-vpn">VPN</span>
-                    </div>
-                    <div class="card-desc">Gestionnaire de fichiers web permettant l'accès aux volumes de stockage.</div>
-                </div>
-
-                <div class="card">
-                    <div class="card-header">
-                        <span class="card-title">Speedtest-Tracker</span>
-                        <span class="tag tag-vpn">VPN</span>
-                    </div>
-                    <div class="card-desc">Suivi automatisé et historisation de la vitesse et de la stabilité de la connexion internet.</div>
-                </div>
-            </div>
-        </section>
-
-        <section id="securite">
-            <h2>Sécurité et Bonnes Pratiques</h2>
-            <ul>
-                <li>Exposition réseau minimale : accès aux services critiques restreint exclusivement par le tunnel VPN (Tailscale).</li>
-                <li>Authentification renforcée : double facteur (TOTP) actif sur les services sensibles.</li>
-                <li>Durcissement de l'hôte : connexion SSH de l'utilisateur root désactivée.</li>
-                <li>Prévention des intrusions : configuration de Fail2ban pour bannir les tentatives de connexions malveillantes.</li>
-                <li>Maintenance : application des mises à jour système automatisées.</li>
-                <li>Résilience : politique de sauvegardes régulières gérée via Proxmox Backup Server.</li>
-            </ul>
-        </section>
-
-        <section id="supervision">
-            <h2>Supervision et Métriques</h2>
-            <p class="context">Le monitoring est assuré par Beszel couplé à l'API Proxmox, offrant une visibilité en temps réel sur la consommation CPU, la RAM, l'espace disque et l'état des conteneurs LXC.</p>
-            <div style="margin-top: 1.5rem; text-align: center;">
-                <img src="dashboard-beszel.png" alt="Capture d'écran du tableau de bord Beszel" style="max-width: 100%; height: auto; border-radius: 8px; border: 1px solid var(--border-color); box-shadow: 0 4px 6px rgba(0,0,0,0.1);">
-            </div>
-        </section>
-
-        <section id="incident">
-            <h2>Gestion des Incidents : Cas Pratique</h2>
-            <div class="incident-block">
-                <p><span class="label">Symptôme :</span> Crash récurrent d'un serveur Minecraft lors de sa phase de démarrage dans son conteneur de jeu.</p>
-                <p><span class="label">Cause :</span> Incompatibilité stricte de la version du serveur de jeu avec l'environnement d'exécution Java 25 récemment déployé.</p>
-                <p><span class="label">Solution :</span> Identification de l'erreur via les logs, puis rétrogradation de l'environnement vers la version stable Java 21 LTS, restaurant ainsi un fonctionnement normal.</p>
-            </div>
-        </section>
-
-        <section id="prochaines-etapes">
-            <h2>Prochaines Étapes et Évolutions</h2>
-            <ul>
-                <li><strong>Déploiement d'un NAS :</strong> Mise en place d'un NAS personnel pour centraliser les documents et photos de la famille avec redondance.</li>
-                <li><strong>Segmentation réseau :</strong> Déploiement de VLANs pour séparer physiquement et logiquement les flux (DMZ, réseau privé, management) via l'intégration d'un switch administrable et d'un routeur/pare-feu matériel (pfSense ou OPNsense).</li>
-            </ul>
-        </section>
-
-        <section id="apprentissage">
-            <h2>Ce que j'ai appris</h2>
-            <p class="context">
-                [à compléter : Rédigez ici un ou deux paragraphes expliquant comment ce projet vous a permis de comprendre les enjeux de la virtualisation, l'importance d'une documentation rigoureuse, la logique des flux réseaux via le reverse proxy, et la rigueur nécessaire pour maintenir une infrastructure disponible et sécurisée au quotidien.]
-            </p>
-        </section>
+      <section id="apprentissages">
+        <div class="section-head">
+          <div class="section-no">07 /</div>
+          <div><h2>Ce que j’ai appris</h2><p class="section-intro">Un retour d’expérience à personnaliser avec des exemples concrets.</p></div>
+        </div>
+        <div class="panel learning">
+          <p>
+            Ce homelab me permet de pratiquer l’administration de services, de comprendre les liens entre virtualisation,
+            réseau et sécurité, et d’aborder les incidents de manière méthodique. Lorsqu’un problème survient, je cherche
+            à identifier le symptôme, isoler la cause puis tester une correction. Exemple concret à développer :
+            <span class="placeholder">[décrire une difficulté rencontrée, les vérifications effectuées, la solution retenue et ce que vous en avez appris]</span>.
+          </p>
+        </div>
+      </section>
     </main>
-</div>
+  </div>
 
+  <footer>
+    <div class="wrap footer-inner">
+      <span>Homelab Proxmox · Projet personnel</span>
+      <span>HEG-Genève · <span class="placeholder">Liandro Gameiro da Silva</span> · <span id="year">2026</span></span>
+    </div>
+  </footer>
 </body>
 </html>
