@@ -1,0 +1,409 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Homelab Proxmox - Portfolio</title>
+    
+    <!-- Google Fonts : Inter -->
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
+
+    <style>
+        /* Variables par défaut (Thème clair) */
+        :root {
+            --bg-color: #f9fafb;
+            --text-color: #111827;
+            --text-muted: #4b5563;
+            --card-bg: #ffffff;
+            --border-color: #e5e7eb;
+            --accent-color: #0284c7;
+            --accent-hover: #0369a1;
+            --tag-public-bg: #fee2e2;
+            --tag-public-text: #991b1b;
+            --tag-vpn-bg: #dcfce7;
+            --tag-vpn-text: #166534;
+        }
+
+        /* Thème sombre automatique */
+        @media (prefers-color-scheme: dark) {
+            :root {
+                --bg-color: #111827;
+                --text-color: #f9fafb;
+                --text-muted: #9ca3af;
+                --card-bg: #1f2937;
+                --border-color: #374151;
+                --accent-color: #38bdf8;
+                --accent-hover: #7dd3fc;
+                --tag-public-bg: #7f1d1d;
+                --tag-public-text: #fecaca;
+                --tag-vpn-bg: #14532d;
+                --tag-vpn-text: #bbf7d0;
+            }
+        }
+
+        * {
+            box-sizing: border-box;
+            margin: 0;
+            padding: 0;
+        }
+
+        body {
+            font-family: 'Inter', sans-serif;
+            background-color: var(--bg-color);
+            color: var(--text-color);
+            line-height: 1.6;
+            padding: 2rem 1rem;
+        }
+
+        .container {
+            max-width: 900px;
+            margin: 0 auto;
+        }
+
+        header {
+            border-bottom: 1px solid var(--border-color);
+            padding-bottom: 2rem;
+            margin-bottom: 2.5rem;
+        }
+
+        h1 {
+            font-size: 2.25rem;
+            font-weight: 700;
+            margin-bottom: 0.5rem;
+        }
+
+        .tagline {
+            font-size: 1.125rem;
+            color: var(--text-muted);
+            margin-bottom: 1rem;
+        }
+
+        .context {
+            font-size: 1rem;
+            margin-bottom: 1.5rem;
+        }
+
+        a {
+            color: var(--accent-color);
+            text-decoration: none;
+            font-weight: 500;
+        }
+
+        a:hover {
+            color: var(--accent-hover);
+            text-decoration: underline;
+        }
+
+        section {
+            margin-bottom: 3.5rem;
+        }
+
+        h2 {
+            font-size: 1.5rem;
+            font-weight: 600;
+            margin-bottom: 1.5rem;
+            border-bottom: 1px solid var(--border-color);
+            padding-bottom: 0.5rem;
+        }
+
+        h3 {
+            font-size: 1.25rem;
+            font-weight: 600;
+            margin-bottom: 0.75rem;
+        }
+
+        /* Grille des services */
+        .grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+            gap: 1.5rem;
+        }
+
+        .card {
+            background-color: var(--card-bg);
+            border: 1px solid var(--border-color);
+            border-radius: 8px;
+            padding: 1.5rem;
+        }
+
+        .card-header {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-bottom: 0.75rem;
+        }
+
+        .card-title {
+            font-weight: 600;
+            font-size: 1.1rem;
+        }
+
+        .tag {
+            font-size: 0.75rem;
+            font-weight: 600;
+            padding: 0.25rem 0.5rem;
+            border-radius: 9999px;
+            text-transform: uppercase;
+        }
+
+        .tag-public {
+            background-color: var(--tag-public-bg);
+            color: var(--tag-public-text);
+        }
+
+        .tag-vpn {
+            background-color: var(--tag-vpn-bg);
+            color: var(--tag-vpn-text);
+        }
+
+        .card-desc {
+            color: var(--text-muted);
+            font-size: 0.95rem;
+        }
+
+        /* Listes */
+        ul {
+            list-style-type: disc;
+            padding-left: 1.5rem;
+            color: var(--text-muted);
+        }
+
+        ul li {
+            margin-bottom: 0.5rem;
+        }
+
+        /* Conteneur image / placeholder */
+        .screenshot-placeholder {
+            width: 100%;
+            height: 300px;
+            background-color: var(--card-bg);
+            border: 2px dashed var(--border-color);
+            border-radius: 8px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            color: var(--text-muted);
+            margin-top: 1.5rem;
+            text-align: center;
+        }
+
+        /* SVG Architecture */
+        .svg-container {
+            width: 100%;
+            background-color: var(--card-bg);
+            border: 1px solid var(--border-color);
+            border-radius: 8px;
+            padding: 1rem;
+            overflow-x: auto;
+        }
+
+        .incident-block {
+            background-color: var(--card-bg);
+            border-left: 4px solid var(--accent-color);
+            padding: 1.5rem;
+            border-radius: 0 8px 8px 0;
+        }
+
+        .incident-block p {
+            margin-bottom: 0.5rem;
+        }
+
+        .label {
+            font-weight: 600;
+            color: var(--text-color);
+        }
+
+        @media (max-width: 640px) {
+            h1 { font-size: 1.75rem; }
+            .grid { grid-template-columns: 1fr; }
+        }
+    </style>
+</head>
+<body>
+
+<div class="container">
+    <header>
+        <h1>Homelab Proxmox</h1>
+        <p class="tagline">Infrastructure personnelle conçue pour l'hébergement de services, la gestion de données et l'apprentissage de l'administration système.</p>
+        <p class="context">
+            Étudiant en informatique de gestion à la HEG-Genève. Recherche d'un emploi étudiant ou d'un stage en support, systèmes et réseaux.<br>
+            <a href="[Lien LinkedIn à compléter]" target="_blank" rel="noopener noreferrer">Consulter mon profil LinkedIn</a>
+        </p>
+    </header>
+
+    <main>
+        <section id="architecture">
+            <h2>Architecture Réseau et Système</h2>
+            <div class="svg-container">
+                <svg viewBox="0 0 800 450" width="100%" height="100%" xmlns="http://www.w3.org/2000/svg">
+                    <defs>
+                        <!-- Flèche pour les connexions -->
+                        <marker id="arrow" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="6" markerHeight="6" orient="auto-start-reverse">
+                            <path d="M 0 0 L 10 5 L 0 10 z" fill="currentColor" />
+                        </marker>
+                    </defs>
+
+                    <style>
+                        .svg-text { fill: currentColor; font-family: 'Inter', sans-serif; font-size: 14px; font-weight: 500; }
+                        .svg-title { fill: currentColor; font-family: 'Inter', sans-serif; font-size: 16px; font-weight: 600; }
+                        .svg-box { fill: transparent; stroke: currentColor; stroke-width: 2; rx: 6; }
+                        .svg-box-host { fill: transparent; stroke: currentColor; stroke-width: 2; stroke-dasharray: 5,5; rx: 8; }
+                        .svg-line { stroke: currentColor; stroke-width: 2; }
+                    </style>
+
+                    <!-- Ligne Internet vers Cloudflare -->
+                    <line x1="120" y1="90" x2="220" y2="90" class="svg-line" marker-end="url(#arrow)" />
+                    <!-- Ligne Cloudflare vers Proxy -->
+                    <line x1="380" y1="90" x2="470" y2="90" class="svg-line" marker-end="url(#arrow)" />
+                    <!-- Ligne Proxy vers Jeux -->
+                    <line x1="550" y1="120" x2="550" y2="180" class="svg-line" marker-end="url(#arrow)" />
+                    <!-- Ligne Tailscale vers Host -->
+                    <line x1="120" y1="290" x2="430" y2="290" class="svg-line" marker-end="url(#arrow)" />
+
+                    <!-- Internet -->
+                    <rect x="20" y="60" width="100" height="60" class="svg-box" />
+                    <text x="70" y="95" text-anchor="middle" class="svg-text">Internet</text>
+
+                    <!-- Cloudflare DNS -->
+                    <rect x="230" y="60" width="140" height="60" class="svg-box" />
+                    <text x="300" y="95" text-anchor="middle" class="svg-text">Cloudflare DNS</text>
+
+                    <!-- Hôte Proxmox -->
+                    <rect x="440" y="20" width="340" height="400" class="svg-box-host" />
+                    <text x="610" y="45" text-anchor="middle" class="svg-title">Hôte Proxmox</text>
+
+                    <!-- Nginx Proxy Manager -->
+                    <rect x="470" y="60" width="160" height="60" class="svg-box" />
+                    <text x="550" y="95" text-anchor="middle" class="svg-text">Nginx Proxy Manager</text>
+
+                    <!-- Conteneurs LXC -->
+                    <rect x="470" y="190" width="280" height="200" class="svg-box" />
+                    <text x="610" y="215" text-anchor="middle" class="svg-title">Conteneurs LXC</text>
+                    
+                    <text x="490" y="250" class="svg-text">• Pelican (Serveurs de jeux)</text>
+                    <text x="490" y="280" class="svg-text">• Immich (Photos)</text>
+                    <text x="490" y="310" class="svg-text">• Filebrowser</text>
+                    <text x="490" y="340" class="svg-text">• Supervision & Backups</text>
+                    <text x="490" y="370" class="svg-text">• ...</text>
+
+                    <!-- Tailscale VPN -->
+                    <rect x="20" y="260" width="100" height="60" class="svg-box" />
+                    <text x="70" y="295" text-anchor="middle" class="svg-text">Tailscale VPN</text>
+                    
+                    <text x="140" y="280" class="svg-text">Accès distant</text>
+                    <text x="140" y="300" class="svg-text">sécurisé (Admin)</text>
+                </svg>
+            </div>
+        </section>
+
+        <section id="services">
+            <h2>Services Hébergés</h2>
+            <div class="grid">
+                <div class="card">
+                    <div class="card-header">
+                        <span class="card-title">Nginx Proxy Manager</span>
+                        <span class="tag tag-public">Public</span>
+                    </div>
+                    <div class="card-desc">Reverse proxy gérant le routage du trafic entrant vers les services exposés.</div>
+                </div>
+
+                <div class="card">
+                    <div class="card-header">
+                        <span class="card-title">Pelican Panel & Wings</span>
+                        <span class="tag tag-public">Public</span>
+                    </div>
+                    <div class="card-desc">Interface de gestion, déploiement et hébergement de serveurs de jeux isolés.</div>
+                </div>
+
+                <div class="card">
+                    <div class="card-header">
+                        <span class="card-title">Immich</span>
+                        <span class="tag tag-vpn">VPN</span>
+                    </div>
+                    <div class="card-desc">Solution de stockage, sauvegarde et d'organisation de photographies personnelles.</div>
+                </div>
+
+                <div class="card">
+                    <div class="card-header">
+                        <span class="card-title">Proxmox Backup Server</span>
+                        <span class="tag tag-vpn">VPN</span>
+                    </div>
+                    <div class="card-desc">Gestion des sauvegardes incrémentielles et de la rétention des données de l'hyperviseur.</div>
+                </div>
+
+                <div class="card">
+                    <div class="card-header">
+                        <span class="card-title">Beszel</span>
+                        <span class="tag tag-vpn">VPN</span>
+                    </div>
+                    <div class="card-desc">Supervision des ressources système, collecte de métriques et alertes de performance.</div>
+                </div>
+
+                <div class="card">
+                    <div class="card-header">
+                        <span class="card-title">Filebrowser</span>
+                        <span class="tag tag-vpn">VPN</span>
+                    </div>
+                    <div class="card-desc">Gestionnaire de fichiers web permettant l'accès aux volumes de stockage.</div>
+                </div>
+
+                <div class="card">
+                    <div class="card-header">
+                        <span class="card-title">Speedtest-Tracker</span>
+                        <span class="tag tag-vpn">VPN</span>
+                    </div>
+                    <div class="card-desc">Suivi automatisé et historisation de la vitesse et de la stabilité de la connexion internet.</div>
+                </div>
+            </div>
+        </section>
+
+        <section id="securite">
+            <h2>Sécurité et Bonnes Pratiques</h2>
+            <ul>
+                <li>Exposition réseau minimale : accès aux services critiques restreint exclusivement par le tunnel VPN (Tailscale).</li>
+                <li>Authentification renforcée : double facteur (TOTP) actif sur les services sensibles.</li>
+                <li>Durcissement de l'hôte : connexion SSH de l'utilisateur root désactivée.</li>
+                <li>Prévention des intrusions : configuration de Fail2ban pour bannir les tentatives de connexions malveillantes.</li>
+                <li>Maintenance : application des mises à jour système automatisées.</li>
+                <li>Résilience : politique de sauvegardes régulières gérée via Proxmox Backup Server.</li>
+            </ul>
+        </section>
+
+        <section id="supervision">
+            <h2>Supervision et Métriques</h2>
+            <p class="context">Le monitoring est assuré par Beszel couplé à l'API Proxmox, offrant une visibilité en temps réel sur la consommation CPU, la RAM, l'espace disque et l'état des conteneurs LXC.</p>
+            <div style="margin-top: 1.5rem; text-align: center;">
+                <img src="dashboard-beszel.png" alt="Capture d'écran du tableau de bord Beszel" style="max-width: 100%; height: auto; border-radius: 8px; border: 1px solid var(--border-color); box-shadow: 0 4px 6px rgba(0,0,0,0.1);">
+            </div>
+        </section>
+
+        <section id="incident">
+            <h2>Gestion des Incidents : Cas Pratique</h2>
+            <div class="incident-block">
+                <p><span class="label">Symptôme :</span> Crash récurrent d'un serveur Minecraft lors de sa phase de démarrage dans son conteneur de jeu.</p>
+                <p><span class="label">Cause :</span> Incompatibilité stricte de la version du serveur de jeu avec l'environnement d'exécution Java 25 récemment déployé.</p>
+                <p><span class="label">Solution :</span> Identification de l'erreur via les logs, puis rétrogradation de l'environnement vers la version stable Java 21 LTS, restaurant ainsi un fonctionnement normal.</p>
+            </div>
+        </section>
+
+        <section id="prochaines-etapes">
+            <h2>Prochaines Étapes et Évolutions</h2>
+            <ul>
+                <li><strong>Déploiement d'un NAS :</strong> Mise en place d'un NAS personnel pour centraliser les documents et photos de la famille avec redondance.</li>
+                <li><strong>Segmentation réseau :</strong> Déploiement de VLANs pour séparer physiquement et logiquement les flux (DMZ, réseau privé, management) via l'intégration d'un switch administrable et d'un routeur/pare-feu matériel (pfSense ou OPNsense).</li>
+            </ul>
+        </section>
+
+        <section id="apprentissage">
+            <h2>Ce que j'ai appris</h2>
+            <p class="context">
+                [à compléter : Rédigez ici un ou deux paragraphes expliquant comment ce projet vous a permis de comprendre les enjeux de la virtualisation, l'importance d'une documentation rigoureuse, la logique des flux réseaux via le reverse proxy, et la rigueur nécessaire pour maintenir une infrastructure disponible et sécurisée au quotidien.]
+            </p>
+        </section>
+    </main>
+</div>
+
+</body>
+</html>
