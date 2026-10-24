@@ -396,11 +396,17 @@
         </div>
         <div class="panel learning">
          <p>
-			Ce homelab me permet de pratiquer l’administration de services, de comprendre les liens entre virtualisation,
-			réseau et sécurité, et d’aborder les incidents de manière méthodique. Lorsqu’un problème survient, je cherche
-			à identifier le symptôme, isoler la cause puis tester une correction. Exemple concret à développer :
-			Lors de la mise en place d'un accès externe via Nginx Proxy Manager, j'ai rencontré une erreur 502 Bad Gateway en essayant d'atteindre un conteneur. Mes vérifications ont consisté à tester d'abord l'accès direct au service en local via son IP et son port, puis à analyser les journaux (logs) du proxy inverse et l'état du réseau virtuel sur Proxmox. La solution a consisté à corriger le port cible dans la configuration du proxy et à ajuster les règles de routage. Cette expérience m'a permis de mieux maîtriser le diagnostic des flux réseau multicouches et l'interdépendance entre les services virtualisés.
+			Ce homelab me permet de pratiquer l’administration de services, de comprendre les liens entre virtualisation, 
+			réseau et sécurité, et d’aborder les incidents de manière méthodique : <strong>identifier le symptôme, isoler la cause, puis tester une correction</strong>.
 		</p>
+		
+		<p style="margin-top: 10px;"><strong>Exemple concret :</strong></p>
+		<ul style="margin-top: 5px; padding-left: 20px;">
+			<li><strong>Problème :</strong> Erreur <em>502 Bad Gateway</em> rencontrée lors de la mise en place d'un accès externe via Nginx Proxy Manager vers un conteneur.</li>
+			<li><strong>Vérifications :</strong> Test de l'accès direct au service en local (IP et port), analyse des journaux (logs) du proxy inverse et contrôle de l'état du réseau virtuel sur Proxmox.</li>
+			<li><strong>Solution :</strong> Correction du port cible dans la configuration du proxy et ajustement des règles de routage.</li>
+			<li><strong>Apprentissage :</strong> Maîtrise accrue du diagnostic des flux réseau multicouches et de l'interdépendance entre services virtualisés.</li>
+		</ul>
         </div>
       </section>
     </main>
