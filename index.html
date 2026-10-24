@@ -374,12 +374,12 @@
           <div><h2>Ce que j’ai appris</h2><p class="section-intro">Un retour d’expérience à personnaliser avec des exemples concrets.</p></div>
         </div>
         <div class="panel learning">
-          <p>
-            Ce homelab me permet de pratiquer l’administration de services, de comprendre les liens entre virtualisation,
-            réseau et sécurité, et d’aborder les incidents de manière méthodique. Lorsqu’un problème survient, je cherche
-            à identifier le symptôme, isoler la cause puis tester une correction. Exemple concret à développer :
-            <span class="placeholder">[décrire une difficulté rencontrée, les vérifications effectuées, la solution retenue et ce que vous en avez appris]</span>.
-          </p>
+         <p>
+			Ce homelab me permet de pratiquer l’administration de services, de comprendre les liens entre virtualisation,
+			réseau et sécurité, et d’aborder les incidents de manière méthodique. Lorsqu’un problème survient, je cherche
+			à identifier le symptôme, isoler la cause puis tester une correction. Exemple concret à développer :
+			Lors de la mise en place d'un accès externe via Nginx Proxy Manager, j'ai rencontré une erreur 502 Bad Gateway en essayant d'atteindre un conteneur. Mes vérifications ont consisté à tester d'abord l'accès direct au service en local via son IP et son port, puis à analyser les journaux (logs) du proxy inverse et l'état du réseau virtuel sur Proxmox. La solution a consisté à corriger le port cible dans la configuration du proxy et à ajuster les règles de routage. Cette expérience m'a permis de mieux maîtriser le diagnostic des flux réseau multicouches et l'interdépendance entre les services virtualisés.
+		</p>
         </div>
       </section>
     </main>
