@@ -4,395 +4,76 @@
   <meta charset="utf-8">
   <meta name="viewport" content="width=device-width, initial-scale=1">
   <meta name="description" content="Portfolio d'infrastructure IT : présentation de mon homelab Proxmox, de mes services et de mes apprentissages.">
+  <meta name="theme-color" content="#08111f">
   <title>Portfolio Homelab - Liandro Gameiro da Silva</title>
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
   <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&display=swap" rel="stylesheet">
-  <style>
-    :root {
-      --bg: #000000;
-      --surface: #111111;
-      --surface-hover: #1a1a1a;
-      --text-main: #f5f5f7;
-      --text-muted: #86868b;
-      --border: rgba(255, 255, 255, 0.1);
-      --accent: #ffffff;
-    }
-
-    * { box-sizing: border-box; margin: 0; padding: 0; }
-    
-    html {
-      scroll-behavior: smooth;
-      background-color: var(--bg);
-    }
-
-    body {
-      color: var(--text-main);
-      font-family: 'Inter', -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Helvetica, Arial, sans-serif;
-      line-height: 1.5;
-      -webkit-font-smoothing: antialiased;
-      -moz-osx-font-smoothing: grayscale;
-      overflow-x: hidden;
-    }
-
-    /* Utilitaires d'animation au scroll */
-    .reveal {
-      opacity: 0;
-      transform: translateY(40px);
-      transition: all 1s cubic-bezier(0.16, 1, 0.3, 1);
-    }
-    .reveal.active {
-      opacity: 1;
-      transform: translateY(0);
-    }
-    .delay-1 { transition-delay: 0.1s; }
-    .delay-2 { transition-delay: 0.2s; }
-
-    /* Navigation Glassmorphism */
-    header {
-      position: fixed;
-      top: 0;
-      left: 0;
-      right: 0;
-      height: 60px;
-      background: rgba(0, 0, 0, 0.7);
-      backdrop-filter: blur(20px);
-      -webkit-backdrop-filter: blur(20px);
-      border-bottom: 1px solid rgba(255,255,255,0.05);
-      z-index: 100;
-      display: flex;
-      justify-content: center;
-      align-items: center;
-    }
-
-    nav {
-      display: flex;
-      align-items: center;
-      gap: 2rem;
-      max-width: 1080px;
-      width: 100%;
-      padding: 0 2rem;
-    }
-
-    .brand {
-      color: var(--text-main);
-      font-weight: 600;
-      font-size: 0.9rem;
-      text-decoration: none;
-      margin-right: auto;
-      letter-spacing: -0.01em;
-    }
-
-    .nav-links {
-      display: flex;
-      gap: 2rem;
-      align-items: center;
-    }
-
-    nav a.nav-link {
-      color: var(--text-muted);
-      text-decoration: none;
-      font-size: 0.85rem;
-      font-weight: 400;
-      transition: color 0.3s ease;
-    }
-
-    nav a.nav-link:hover, nav a.nav-link.active {
-      color: var(--text-main);
-    }
-
-    /* Sélecteur de langue */
-    .lang-switcher {
-      display: flex;
-      align-items: center;
-      background: rgba(255, 255, 255, 0.08);
-      border: 1px solid rgba(255, 255, 255, 0.1);
-      border-radius: 20px;
-      padding: 2px;
-      margin-left: 0.5rem;
-    }
-
-    .lang-btn {
-      background: none;
-      border: none;
-      color: var(--text-muted);
-      padding: 4px 10px;
-      font-size: 0.75rem;
-      font-weight: 600;
-      cursor: pointer;
-      border-radius: 16px;
-      transition: all 0.2s ease;
-    }
-
-    .lang-btn.active {
-      background: var(--text-main);
-      color: var(--bg);
-    }
-
-    /* Layout Sections */
-    section {
-      padding: 140px 2rem;
-      max-width: 1080px;
-      margin: 0 auto;
-      display: flex;
-      flex-direction: column;
-      align-items: center;
-      text-align: center;
-    }
-
-    .section-left {
-      align-items: flex-start;
-      text-align: left;
-    }
-
-    /* Typography Apple Style */
-    h1 {
-      font-size: clamp(3rem, 7vw, 5.5rem);
-      font-weight: 700;
-      letter-spacing: -0.05em;
-      line-height: 1.05;
-      margin-bottom: 1.5rem;
-      background: linear-gradient(180deg, #ffffff 0%, #a1a1a6 100%);
-      -webkit-background-clip: text;
-      -webkit-text-fill-color: transparent;
-      text-wrap: balance;
-    }
-
-    h2 {
-      font-size: clamp(2rem, 5vw, 3.2rem);
-      font-weight: 600;
-      letter-spacing: -0.04em;
-      line-height: 1.1;
-      margin-bottom: 1rem;
-      text-wrap: balance;
-    }
-
-    .eyebrow {
-      font-size: 0.85rem;
-      font-weight: 600;
-      text-transform: uppercase;
-      letter-spacing: 0.1em;
-      color: var(--text-muted);
-      margin-bottom: 1rem;
-    }
-
-    p.lead {
-      font-size: clamp(1.1rem, 2vw, 1.35rem);
-      color: var(--text-muted);
-      font-weight: 400;
-      max-width: 800px;
-      letter-spacing: -0.01em;
-      line-height: 1.5;
-      margin-bottom: 2.5rem;
-      text-wrap: balance;
-    }
-
-    p.body-text {
-      color: var(--text-muted);
-      font-size: 1.05rem;
-      max-width: 650px;
-      line-height: 1.6;
-    }
-
-    /* Boutons */
-    .btn {
-      display: inline-flex;
-      align-items: center;
-      justify-content: center;
-      padding: 1rem 2rem;
-      background: var(--text-main);
-      color: var(--bg);
-      text-decoration: none;
-      border-radius: 999px;
-      font-weight: 500;
-      font-size: 0.95rem;
-      transition: transform 0.2s ease, opacity 0.2s ease;
-    }
-
-    .btn:hover {
-      transform: scale(0.98);
-      opacity: 0.9;
-    }
-
-    /* Bento Box Grid */
-    .bento-grid {
-      display: grid;
-      grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
-      gap: 1.5rem;
-      width: 100%;
-      margin-top: 3rem;
-    }
-
-    .bento-card {
-      background: var(--surface);
-      border-radius: 28px;
-      padding: 2.5rem;
-      border: 1px solid rgba(255,255,255,0.03);
-      text-align: left;
-      transition: background 0.3s ease;
-      display: flex;
-      flex-direction: column;
-    }
-
-    .bento-card:hover {
-      background: var(--surface-hover);
-    }
-
-    @media (min-width: 768px) {
-      .bento-card.wide { grid-column: span 2; }
-    }
-
-    .bento-card h3 {
-      font-size: 1.3rem;
-      font-weight: 600;
-      letter-spacing: -0.02em;
-      margin-bottom: 0.5rem;
-      color: var(--text-main);
-    }
-
-    .bento-card p {
-      color: var(--text-muted);
-      font-size: 1rem;
-      line-height: 1.5;
-    }
-
-    .tag {
-      display: inline-block;
-      font-size: 0.7rem;
-      font-weight: 600;
-      text-transform: uppercase;
-      letter-spacing: 0.05em;
-      padding: 0.35rem 0.8rem;
-      border-radius: 20px;
-      background: rgba(255,255,255,0.1);
-      color: var(--text-main);
-      margin-bottom: 1.2rem;
-      align-self: flex-start;
-    }
-    
-    .tag.red { background: rgba(255, 59, 48, 0.15); color: #ff453a; }
-    .tag.green { background: rgba(48, 209, 88, 0.15); color: #32d74b; }
-
-    /* Images & SVG */
-    .media-container {
-      width: 100%;
-      border-radius: 24px;
-      overflow: hidden;
-      border: 1px solid rgba(255,255,255,0.05);
-      margin-top: 3rem;
-      background: var(--surface);
-      position: relative;
-    }
-
-    .media-container img {
-      width: 100%;
-      height: auto;
-      display: block;
-      opacity: 0.6;
-      transition: opacity 0.5s ease;
-    }
-
-    .media-container:hover img { opacity: 1; }
-
-    .image-caption {
-      position: absolute;
-      bottom: 0;
-      left: 0;
-      right: 0;
-      padding: 1.5rem;
-      background: linear-gradient(to top, rgba(0,0,0,0.9), transparent);
-      color: var(--text-main);
-      font-size: 0.9rem;
-      font-weight: 500;
-      opacity: 0;
-      transition: opacity 0.3s ease;
-    }
-
-    .media-container:hover .image-caption {
-      opacity: 1;
-    }
-
-    .arch-svg { padding: 3rem; }
-    .arch-svg text { fill: var(--text-muted); font-weight: 500; }
-    .arch-svg rect { fill: transparent; stroke: var(--border); stroke-width: 1.5; rx: 12px; }
-    .arch-svg path { stroke: var(--border); stroke-width: 1.5; }
-
-    /* Listes Minimalistes */
-    ul.clean-list {
-      list-style: none;
-      width: 100%;
-      max-width: 800px;
-      margin-top: 2rem;
-      text-align: left;
-    }
-
-    ul.clean-list li {
-      padding: 1.5rem 0;
-      border-bottom: 1px solid rgba(255,255,255,0.1);
-      display: flex;
-      flex-direction: column;
-      gap: 0.4rem;
-    }
-
-    ul.clean-list li:last-child { border-bottom: none; }
-
-    ul.clean-list li strong {
-      font-size: 1.2rem;
-      font-weight: 600;
-      color: var(--text-main);
-      letter-spacing: -0.01em;
-    }
-
-    ul.clean-list li span {
-      color: var(--text-muted);
-      font-size: 1.05rem;
-    }
-
-    footer {
-      padding: 4rem 2rem;
-      text-align: center;
-      border-top: 1px solid rgba(255,255,255,0.05);
-      color: var(--text-muted);
-      font-size: 0.85rem;
-    }
-
-    @media (max-width: 768px) {
-      .nav-links { display: none; }
-      header { justify-content: space-between; padding: 0 1.5rem; }
-      .brand { margin: 0; }
-      section { padding: 100px 1.5rem; }
-      .bento-card { padding: 2rem; }
-      .arch-svg { padding: 1.5rem; }
-    }
-  </style>
+      <link rel="stylesheet" href="assets/css/styles.css">
 </head>
 <body>
 
+  <a class="skip-link" href="#contenu">Aller au contenu</a>
   <header>
     <nav>
       <a href="#hero" class="brand">Liandro / Homelab</a>
-      <div class="nav-links">
+      <div class="nav-links" id="primary-navigation">
         <a href="#architecture" class="nav-link" data-i18n="nav_arch">Architecture</a>
+        <a href="#overview" class="nav-link" data-i18n="nav_overview">Vue d'ensemble</a>
         <a href="#services" class="nav-link" data-i18n="nav_services">Services</a>
         <a href="#securite" class="nav-link" data-i18n="nav_security">Sécurité</a>
         <a href="#supervision" class="nav-link" data-i18n="nav_monitoring">Supervision</a>
         <a href="#futur" class="nav-link" data-i18n="nav_future">Projets futurs</a>
       </div>
       <div class="lang-switcher">
-        <button class="lang-btn active" onclick="setLanguage('fr')">FR</button>
-        <button class="lang-btn" onclick="setLanguage('en')">EN</button>
+        <button class="lang-btn active" type="button" data-lang="fr" aria-pressed="true">FR</button>
+        <button class="lang-btn" type="button" data-lang="en" aria-pressed="false">EN</button>
       </div>
+      <button class="menu-toggle" type="button" aria-controls="primary-navigation" aria-expanded="false" aria-label="Ouvrir le menu">
+        <svg width="20" height="20" viewBox="0 0 24 24" aria-hidden="true"><path d="M4 7h16M4 12h16M4 17h16" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"/></svg>
+      </button>
     </nav>
   </header>
 
-  <main>
+  <main id="contenu">
     <!-- HERO -->
-    <section id="hero" style="min-height: 100vh; justify-content: center;">
+    <section id="hero" class="hero-section">
       <div class="reveal">
         <span class="eyebrow" data-i18n="hero_eyebrow">Portfolio · Projet Personnel</span>
         <h1 data-i18n="hero_title">Mon Homelab<br>Proxmox.</h1>
         <p class="lead" data-i18n="hero_lead">Un environnement que j'ai monté de A à Z pour expérimenter la virtualisation, l’administration système et la sécurité réseau par la pratique.</p>
-        <a class="btn" href="https://www.linkedin.com/in/lndr/" target="_blank" data-i18n="hero_btn">Consulter mon profil LinkedIn</a>
+        <a class="btn" href="https://www.linkedin.com/in/lndr/" target="_blank" rel="noopener noreferrer" data-i18n="hero_btn">Consulter mon profil LinkedIn</a>
+        <span class="status-line" data-i18n="hero_status">Homelab actif · documentation en évolution</span>
+      </div>
+    </section>
+
+    <!-- VUE D'ENSEMBLE -->
+    <section id="overview" class="section-left overview-section">
+      <div class="reveal">
+        <span class="eyebrow" data-i18n="overview_eyebrow">En un coup d'œil</span>
+        <h2 data-i18n="overview_title">Un laboratoire pensé pour apprendre.</h2>
+        <p class="body-text" data-i18n="overview_desc">Une infrastructure personnelle où chaque service répond à un objectif concret : héberger, sécuriser, sauvegarder et observer.</p>
+      </div>
+      <div class="stats-grid">
+        <article class="stat-card reveal">
+          <strong>08</strong>
+          <span data-i18n="overview_stat_services">services hébergés</span>
+        </article>
+        <article class="stat-card reveal delay-1">
+          <strong>LXC</strong>
+          <span data-i18n="overview_stat_virtualization">conteneurs virtualisés</span>
+        </article>
+        <article class="stat-card reveal delay-2">
+          <strong>24/7</strong>
+          <span data-i18n="overview_stat_monitoring">supervision active</span>
+        </article>
+      </div>
+      <div class="tech-list reveal">
+        <span data-i18n="overview_stack_label">Stack principale</span>
+        <div class="tech-pills" aria-label="Technologies utilisées">
+          <span>Proxmox VE</span><span>Cloudflare</span><span>Nginx Proxy Manager</span>
+          <span>Tailscale</span><span>Fail2ban</span><span>Beszel</span>
+        </div>
       </div>
     </section>
 
@@ -403,7 +84,7 @@
         <h2 data-i18n="arch_title">Architecture logique.</h2>
         <p class="lead" data-i18n="arch_lead">Ma démarche pour isoler le réseau privé et sécuriser l'exposition de certains services sur internet.</p>
       </div>
-      
+
       <!-- Schéma SVG -->
       <div class="media-container arch-svg reveal delay-1">
         <svg viewBox="0 0 900 420" role="img">
@@ -435,7 +116,7 @@
             <text x="447" y="202" font-size="11" letter-spacing="1.3" data-i18n="svg_physical_server">SERVEUR PHYSIQUE</text>
             <rect x="257" y="216" width="381" height="34" />
             <text x="447" y="238" font-size="13" fill="#f5f5f7">Proxmox VE (Hyperviseur)</text>
-            
+
             <path d="M797 101 V146 H638 V232" stroke-dasharray="4 4" fill="none" marker-end="url(#arrow)"/>
 
             <rect x="20" y="305" width="260" height="77" />
@@ -443,7 +124,7 @@
             <text x="150" y="354" font-size="12" data-i18n="svg_encrypted_access">Mon accès chiffré</text>
 
             <path d="M280 343 H350 V267" fill="none" marker-end="url(#arrow)"/>
-            
+
             <rect x="480" y="305" width="400" height="77" />
             <text x="680" y="333" font-size="13" fill="#f5f5f7" data-i18n="svg_access_policy_title">Politique d'accès</text>
             <text x="680" y="354" font-size="12" data-i18n="svg_access_policy_desc">Jeux : Publics | Administration : VPN</text>
@@ -453,7 +134,7 @@
 
       <!-- Image Proxmox -->
       <div class="media-container reveal delay-2">
-        <img src="https://raw.githubusercontent.com/WalV1x/homelab-wiki/refs/heads/main/asset/pve_dashboard.png" alt="Interface de gestion Proxmox VE" id="img-pve-alt">
+        <img src="assets/images/pve_dashboard.png" alt="Interface de gestion Proxmox VE" id="img-pve-alt" loading="lazy" decoding="async">
         <div class="image-caption" data-i18n="pve_caption">L'interface centrale de mon hyperviseur Proxmox, montrant l'état des ressources matérielles et mes différents conteneurs actifs.</div>
       </div>
     </section>
@@ -465,24 +146,34 @@
         <h2 data-i18n="services_title">Les services que j'héberge.</h2>
         <p class="body-text" data-i18n="services_desc">J'ai fait le choix de virtualiser chaque outil dans des conteneurs LXC indépendants afin de compartimenter les pannes et d'optimiser les ressources de mon serveur.</p>
       </div>
-      
+
       <div class="bento-grid">
-        <div class="bento-card wide reveal">
+        <div class="bento-card reveal">
           <span class="tag red" data-i18n="tag_public">Exposé publiquement</span>
-          <h3>Pelican Panel & Wings</h3>
-          <p data-i18n="pelican_desc">Je gère ma propre infrastructure de serveurs de jeux (Minecraft, Satisfactory) pour mes amis. Ce service est volontairement isolé du reste de mon réseau domestique pour des raisons de sécurité.</p>
+          <h3>Pelican Panel</h3>
+          <p data-i18n="pelican_panel_desc">Interface d'administration de mon infrastructure de serveurs de jeux Minecraft et Satisfactory.</p>
         </div>
         <div class="bento-card reveal delay-1">
+          <span class="tag green" data-i18n="tag_vpn">Protégé par VPN</span>
+          <h3>Pelican Wings</h3>
+          <p data-i18n="pelican_wings_desc">Agent d'exécution qui lance et gère les serveurs de jeux pilotés depuis Pelican Panel.</p>
+        </div>
+        <div class="bento-card reveal delay-2">
           <span class="tag green" data-i18n="tag_vpn">Protégé par VPN</span>
           <h3>Nginx Proxy Manager</h3>
           <p data-i18n="npm_desc">Gestionnaire de routage. Il sécurise mes connexions externes, configure mes hôtes virtuels et gère automatiquement mes certificats SSL Let's Encrypt.</p>
         </div>
-        <div class="bento-card reveal delay-2">
+        <div class="bento-card reveal">
+          <span class="tag green" data-i18n="tag_vpn">Protégé par VPN</span>
+          <h3>Beszel</h3>
+          <p data-i18n="beszel_desc">Outil de supervision utilisé pour suivre la santé du serveur, ses ressources et son activité réseau.</p>
+        </div>
+        <div class="bento-card reveal delay-1">
           <span class="tag green" data-i18n="tag_vpn">Protégé par VPN</span>
           <h3>Proxmox Backup Server</h3>
           <p data-i18n="pbs_desc">Ma solution de sauvegarde. Je l'ai configurée pour effectuer des sauvegardes incrémentales et dédupliquées de mes machines virtuelles.</p>
         </div>
-        <div class="bento-card reveal">
+        <div class="bento-card reveal delay-2">
           <span class="tag green" data-i18n="tag_vpn">Protégé par VPN</span>
           <h3>Immich</h3>
           <p data-i18n="immich_desc">Une alternative à Google Photos que j'auto-héberge. Cela me permet de tester la gestion de stockage intensif et le traitement d'images par IA locale.</p>
@@ -500,8 +191,8 @@
       </div>
 
       <!-- Image NPM (Réseau) -->
-      <div class="media-container reveal" style="margin-top: 2rem;">
-        <img src="https://raw.githubusercontent.com/WalV1x/homelab-wiki/refs/heads/main/asset/npm_dashboard.png" alt="Tableau de bord Nginx Proxy Manager" id="img-npm-alt">
+      <div class="media-container npm-media reveal">
+        <img src="assets/images/npm_dashboard.png" alt="Tableau de bord Nginx Proxy Manager" id="img-npm-alt" loading="lazy" decoding="async">
         <div class="image-caption" data-i18n="npm_caption">Configuration de Nginx Proxy Manager : gestion du routage DNS et génération automatisée de certificats SSL Let's Encrypt.</div>
       </div>
     </section>
@@ -539,8 +230,8 @@
       </div>
 
       <!-- Image Beszel -->
-      <div class="media-container reveal delay-1" style="background: #000; padding-top: 1rem;">
-        <img src="https://raw.githubusercontent.com/WalV1x/homelab-wiki/refs/heads/main/asset/monitor_dashboard.png" alt="Tableau de bord de monitoring Beszel" id="img-beszel-alt">
+      <div class="media-container monitoring-media reveal delay-1">
+        <img src="assets/images/monitor_dashboard.png" alt="Tableau de bord de monitoring Beszel" id="img-beszel-alt" loading="lazy" decoding="async">
         <div class="image-caption" data-i18n="mon_caption">Surveillance en temps réel des charges système, du réseau et de l'espace disque via Beszel.</div>
       </div>
     </section>
@@ -575,223 +266,16 @@
           <p data-i18n="fut_ai_desc">Je m'intéresse de plus en plus à l'hébergement local de modèles de langage (LLM). Je souhaite dédier une partie de mes ressources pour expérimenter avec Ollama.</p>
         </div>
       </div>
-      
-      <div class="reveal" style="margin-top: 6rem; border-top: 1px solid rgba(255,255,255,0.1); padding-top: 4rem;">
-        <span class="eyebrow" data-i18n="method_eyebrow">Conclusion</span>
-        <h2 style="font-size: 2.5rem;" data-i18n="method_title">Ma méthodologie face aux pannes.</h2>
-        <p class="body-text" style="max-width: 800px; margin-top: 1rem;" data-i18n="method_desc">
-          Maintenir ce laboratoire m'a surtout appris à adopter une vraie rigueur de diagnostic réseau. Face à une panne, j'ai appris à ne pas agir au hasard : j'identifie le symptôme en consultant les <em>logs</em> système, j'isole la couche réseau défaillante (Pare-feu, Reverse Proxy, Hyperviseur), puis je teste une solution.<br><br>
-          <strong>Un cas pratique :</strong> J'ai récemment dû diagnostiquer des <em>Kernel Panics</em> répétés sur mes serveurs de jeu. L'analyse des erreurs m'a permis d'identifier un conflit de version Java (v25 vs v21 LTS). En modifiant l'environnement d'exécution de mon conteneur, j'ai pu stabiliser définitivement le service.
-        </p>
-      </div>
+
     </section>
   </main>
 
   <footer>
     <p><span data-i18n="footer_text">Conçu et administré par Liandro Gameiro da Silva — HEG-Genève</span> · <span id="year">2026</span></p>
   </footer>
+  <a class="back-to-top" href="#hero" aria-label="Retour en haut">↑</a>
 
   <!-- Script pour les animations au scroll et la traduction -->
-  <script>
-    const translations = {
-      fr: {
-        page_title: "Portfolio Homelab - Liandro Gameiro da Silva",
-        nav_arch: "Architecture",
-        nav_services: "Services",
-        nav_security: "Sécurité",
-        nav_monitoring: "Supervision",
-        nav_future: "Projets futurs",
-        hero_eyebrow: "Portfolio · Projet Personnel",
-        hero_title: "Mon Homelab<br>Proxmox.",
-        hero_lead: "Un environnement que j'ai monté de A à Z pour expérimenter la virtualisation, l’administration système et la sécurité réseau par la pratique.",
-        hero_btn: "Consulter mon profil LinkedIn",
-        arch_eyebrow: "Conception & Hyperviseur",
-        arch_title: "Architecture logique.",
-        arch_lead: "Ma démarche pour isoler le réseau privé et sécuriser l'exposition de certains services sur internet.",
-        svg_public_access: "Accès public",
-        svg_proxy_res: "Résolution proxy",
-        svg_lxc: "Conteneurs LXC",
-        svg_hosted_services: "Mes services hébergés",
-        svg_physical_server: "SERVEUR PHYSIQUE",
-        svg_encrypted_access: "Mon accès chiffré",
-        svg_access_policy_title: "Politique d'accès",
-        svg_access_policy_desc: "Jeux : Publics | Administration : VPN",
-        pve_caption: "L'interface centrale de mon hyperviseur Proxmox, montrant l'état des ressources matérielles et mes différents conteneurs actifs.",
-        services_eyebrow: "Administration système & Réseau",
-        services_title: "Les services que j'héberge.",
-        services_desc: "J'ai fait le choix de virtualiser chaque outil dans des conteneurs LXC indépendants afin de compartimenter les pannes et d'optimiser les ressources de mon serveur.",
-        tag_public: "Exposé publiquement",
-        tag_vpn: "Protégé par VPN",
-        pelican_desc: "Je gère ma propre infrastructure de serveurs de jeux (Minecraft, Satisfactory) pour mes amis. Ce service est volontairement isolé du reste de mon réseau domestique pour des raisons de sécurité.",
-        npm_desc: "Gestionnaire de routage. Il sécurise mes connexions externes, configure mes hôtes virtuels et gère automatiquement mes certificats SSL Let's Encrypt.",
-        pbs_desc: "Ma solution de sauvegarde. Je l'ai configurée pour effectuer des sauvegardes incrémentales et dédupliquées de mes machines virtuelles.",
-        immich_desc: "Une alternative à Google Photos que j'auto-héberge. Cela me permet de tester la gestion de stockage intensif et le traitement d'images par IA locale.",
-        filebrowser_desc: "Une interface web allégée et ultra-rapide pour la gestion, le partage et la navigation dans mes fichiers distants en toute sécurité.",
-        speedtest_desc: "Un outil automatisé que j'ai mis en place pour générer un historique constant de la stabilité et du débit de ma connexion internet.",
-        npm_caption: "Configuration de Nginx Proxy Manager : gestion du routage DNS et génération automatisée de certificats SSL Let's Encrypt.",
-        sec_eyebrow: "Bonnes pratiques",
-        sec_title: "Mes mesures de sécurité.",
-        sec_lead: "Gérer un serveur connecté à internet implique des risques. Voici les règles que je m'impose.",
-        sec_zt_title: "Réseau Zero-Trust (Tailscale)",
-        sec_zt_desc: "Je n'ouvre aucun port d'administration (SSH, Proxmox) sur ma box internet. Tout accès distant nécessite une connexion à mon tunnel VPN WireGuard.",
-        sec_f2b_title: "Prévention d'intrusions (Fail2ban)",
-        sec_f2b_desc: "J'ai configuré Fail2ban pour bannir automatiquement les adresses IP qui tenteraient de forcer l'accès (brute-force) à mes services exposés.",
-        sec_mfa_title: "MFA & Gestion des accès",
-        sec_mfa_desc: "J'impose une double authentification (TOTP) sur tous mes panneaux de contrôle et l'accès Root par mot de passe est désactivé au profit de clés SSH privées.",
-        mon_eyebrow: "Observabilité",
-        mon_title: "Supervision du matériel.",
-        mon_desc: "J'utilise l'API de Proxmox couplée à <strong>Beszel</strong> pour monitorer la santé de ma machine au quotidien (CPU, RAM, état des disques, températures).",
-        mon_caption: "Surveillance en temps réel des charges système, du réseau et de l'espace disque via Beszel.",
-        fut_eyebrow: "Mes prochains projets",
-        fut_title: "Évolutions prévues.",
-        fut_desc: "Mon infrastructure est mon terrain de jeu. Voici ce que je compte y intégrer prochainement :",
-        fut_pihole_title: "Filtrage DNS & Sécurité",
-        fut_pihole_desc: "Mon prochain défi est de configurer un Raspberry Pi avec Pi-hole pour intercepter et bloquer le trafic publicitaire et la télémétrie sur l'ensemble de mon réseau domestique.",
-        fut_vps_title: "Serveur Relais (VPS)",
-        fut_vps_desc: "Je souhaite acquérir un VPS distant qui fera office de bouclier, afin de masquer définitivement mon adresse IP résidentielle lorsque j'expose un service.",
-        fut_nas_title: "NAS Personnel",
-        fut_nas_desc: "Je compte installer TrueNAS et configurer une grappe RAID de 2 disques (4 To) pour mieux comprendre la redondance matérielle et sécuriser les données familiales.",
-        fut_hw_title: "Mise à niveau matérielle",
-        fut_hw_desc: "J'ai prévu de doubler la mémoire vive de mon serveur (passage à 64 Go) et d'ajouter des disques NVMe pour supporter la charge de mes futurs conteneurs.",
-        fut_ai_title: "Infrastructure IA",
-        fut_ai_desc: "Je m'intéresse de plus en plus à l'hébergement local de modèles de langage (LLM). Je souhaite dédier une partie de mes ressources pour expérimenter avec Ollama.",
-        method_eyebrow: "Conclusion",
-        method_title: "Ma méthodologie face aux pannes.",
-        method_desc: "Maintenir ce laboratoire m'a surtout appris à adopter une vraie rigueur de diagnostic réseau. Face à une panne, j'ai appris à ne pas agir au hasard : j'identifie le symptôme en consultant les <em>logs</em> système, j'isole la couche réseau défaillante (Pare-feu, Reverse Proxy, Hyperviseur), puis je teste une solution.<br><br><strong>Un cas pratique :</strong> J'ai récemment dû diagnostiquer des <em>Kernel Panics</em> répétés sur mes serveurs de jeu. L'analyse des erreurs m'a permis d'identifier un conflit de version Java (v25 vs v21 LTS). En modifiant l'environnement d'exécution de mon conteneur, j'ai pu stabiliser définitivement le service.",
-        footer_text: "Conçu et administré par Liandro Gameiro da Silva — HEG-Genève"
-      },
-      en: {
-        page_title: "Homelab Portfolio - Liandro Gameiro da Silva",
-        nav_arch: "Architecture",
-        nav_services: "Services",
-        nav_security: "Security",
-        nav_monitoring: "Monitoring",
-        nav_future: "Future Projects",
-        hero_eyebrow: "Portfolio · Personal Project",
-        hero_title: "My Proxmox<br>Home Lab.",
-        hero_lead: "An environment I built from scratch to experiment with virtualization, system administration, and network security through hands-on practice.",
-        hero_btn: "View my LinkedIn Profile",
-        arch_eyebrow: "Design & Hypervisor",
-        arch_title: "Logical Architecture.",
-        arch_lead: "My strategy for isolating the private network while securely exposing select services to the internet.",
-        svg_public_access: "Public Access",
-        svg_proxy_res: "Proxy Resolution",
-        svg_lxc: "LXC Containers",
-        svg_hosted_services: "My Hosted Services",
-        svg_physical_server: "PHYSICAL SERVER",
-        svg_encrypted_access: "Encrypted Access",
-        svg_access_policy_title: "Access Policy",
-        svg_access_policy_desc: "Gaming: Public | Admin: VPN",
-        pve_caption: "Central dashboard of my Proxmox hypervisor, displaying hardware resource utilization and active LXC containers.",
-        services_eyebrow: "System & Network Administration",
-        services_title: "Hosted Services.",
-        services_desc: "I chose to virtualize each tool inside independent LXC containers to isolate faults and optimize overall server resources.",
-        tag_public: "Publicly Exposed",
-        tag_vpn: "VPN Protected",
-        pelican_desc: "I run my own game server infrastructure (Minecraft, Satisfactory) for friends. This service is intentionally isolated from my main home network for security.",
-        npm_desc: "Routing manager. Secures incoming connections, manages virtual hosts, and automates Let's Encrypt SSL certificate renewals.",
-        pbs_desc: "My backup solution. Configured to perform incremental and deduplicated backups of all virtual machines and LXC containers.",
-        immich_desc: "Self-hosted Google Photos alternative. Used to experiment with high-volume storage management and local AI image processing.",
-        filebrowser_desc: "A lightweight, high-performance web dashboard for securely browsing, sharing, and managing remote files.",
-        speedtest_desc: "An automated tool deployed to track and analyze internet connection speed and stability over time.",
-        npm_caption: "Nginx Proxy Manager configuration: DNS routing management and automated Let's Encrypt SSL generation.",
-        sec_eyebrow: "Best Practices",
-        sec_title: "Security Hardening.",
-        sec_lead: "Hosting services connected to the internet carries inherent risks. Here are the security policies I enforce.",
-        sec_zt_title: "Zero-Trust Network (Tailscale)",
-        sec_zt_desc: "No administration ports (SSH, Proxmox VE) are open on my router. All remote management requires an active WireGuard VPN session.",
-        sec_f2b_title: "Intrusion Prevention (Fail2ban)",
-        sec_f2b_desc: "Fail2ban is configured to automatically ban IP addresses exhibiting brute-force attempt patterns against exposed services.",
-        sec_mfa_title: "MFA & Access Control",
-        sec_mfa_desc: "Multi-Factor Authentication (TOTP) is enforced on all control panels. Password-based root SSH access is disabled in favor of private SSH keys.",
-        mon_eyebrow: "Observability",
-        mon_title: "Hardware Monitoring.",
-        mon_desc: "I leverage the Proxmox API integrated with <strong>Beszel</strong> to monitor server health daily (CPU, RAM, disk usage, temperatures).",
-        mon_caption: "Real-time tracking of system load, network traffic, and disk storage metrics via Beszel.",
-        fut_eyebrow: "Upcoming Projects",
-        fut_title: "Planned Upgrades.",
-        fut_desc: "My home lab serves as a continuous sandbox. Here is what I plan to implement next:",
-        fut_pihole_title: "DNS Filtering & Security",
-        fut_pihole_desc: "My next goal is setting up a Raspberry Pi running Pi-hole to sinkhole network-wide advertising and telemetry tracking.",
-        fut_vps_title: "Relay Server (VPS)",
-        fut_vps_desc: "I plan to deploy a remote VPS acting as a public proxy shield, keeping my home IP address completely hidden when exposing services.",
-        fut_nas_title: "Personal NAS",
-        fut_nas_desc: "Installing TrueNAS with a 2-disk RAID array (4TB) to gain hands-on experience with hardware redundancy and secure family backups.",
-        fut_hw_title: "Hardware Upgrade",
-        fut_hw_desc: "Upgrading server RAM to 64GB and adding NVMe SSD storage to support heavier workloads and upcoming LXC containers.",
-        fut_ai_title: "Local AI Infrastructure",
-        fut_ai_desc: "Exploring self-hosted Large Language Models (LLMs) by allocating dedicated compute resources to experiment with Ollama.",
-        method_eyebrow: "Conclusion",
-        method_title: "Troubleshooting & Method.",
-        method_desc: "Managing this lab has taught me a rigorous approach to network diagnostics. When faced with an incident, I rely on structured troubleshooting: reading system <em>logs</em>, isolating the impacted layer (Firewall, Reverse Proxy, Hypervisor), and applying incremental fixes.<br><br><strong>Case Study:</strong> I recently resolved recurring <em>Kernel Panics</em> on game instances. Log analysis revealed a Java version conflict (v25 vs v21 LTS). Adjusting the container environment permanently stabilized the host.",
-        footer_text: "Designed & Administered by Liandro Gameiro da Silva — HEG Geneva"
-      }
-    };
-
-    function setLanguage(lang) {
-      document.documentElement.lang = lang;
-      
-      // Mise à jour des boutons de langue
-      document.querySelectorAll('.lang-btn').forEach(btn => {
-        btn.classList.toggle('active', btn.textContent.toLowerCase() === lang);
-      });
-
-      // Remplacement des textes avec data-i18n
-      document.querySelectorAll('[data-i18n]').forEach(el => {
-        const key = el.getAttribute('data-i18n');
-        if (translations[lang] && translations[lang][key]) {
-          el.innerHTML = translations[lang][key];
-        }
-      });
-
-      // Mettre à jour le titre du document
-      if (translations[lang].page_title) {
-        document.title = translations[lang].page_title;
-      }
-    }
-
-    document.addEventListener("DOMContentLoaded", () => {
-      // Animation d'apparition
-      const observerOptions = {
-        root: null,
-        rootMargin: '0px',
-        threshold: 0.15
-      };
-
-      const observer = new IntersectionObserver((entries, observer) => {
-        entries.forEach(entry => {
-          if (entry.isIntersecting) {
-            entry.target.classList.add('active');
-            observer.unobserve(entry.target);
-          }
-        });
-      }, observerOptions);
-
-      document.querySelectorAll('.reveal').forEach(el => {
-        observer.observe(el);
-      });
-
-      // Navigation active au scroll
-      const sections = document.querySelectorAll("section");
-      const navLinks = document.querySelectorAll(".nav-link");
-
-      window.addEventListener("scroll", () => {
-        let current = "";
-        sections.forEach(section => {
-          const sectionTop = section.offsetTop;
-          if (pageYOffset >= sectionTop - 250) {
-            current = section.getAttribute("id");
-          }
-        });
-
-        navLinks.forEach(link => {
-          link.classList.remove("active");
-          if (link.getAttribute("href").includes(current)) {
-            link.classList.add("active");
-          }
-        });
-      });
-    });
-  </script>
+    <script src="assets/js/script.js" defer></script>
 </body>
 </html>
