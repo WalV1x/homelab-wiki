@@ -12,6 +12,8 @@ const translations = {
         hero_lead: "Un environnement que j'ai monté de A à Z pour expérimenter la virtualisation, l’administration système et la sécurité réseau par la pratique.",
         hero_btn: "Consulter mon profil LinkedIn",
         hero_status: "Homelab actif · documentation en évolution",
+        footer_linkedin: "LinkedIn",
+        footer_github: "GitHub",
         overview_eyebrow: "En un coup d'œil",
         overview_title: "Un laboratoire pensé pour apprendre.",
         overview_desc: "Une infrastructure personnelle où chaque service répond à un objectif concret : héberger, sécuriser, sauvegarder et observer.",
@@ -86,6 +88,8 @@ const translations = {
         hero_lead: "An environment I built from scratch to experiment with virtualization, system administration, and network security through hands-on practice.",
         hero_btn: "View my LinkedIn Profile",
         hero_status: "Active homelab · documentation in progress",
+        footer_linkedin: "LinkedIn",
+        footer_github: "GitHub",
         overview_eyebrow: "At a glance",
         overview_title: "A lab built for learning.",
         overview_desc: "A personal infrastructure where every service has a clear purpose: hosting, securing, backing up, and observing.",
@@ -166,36 +170,49 @@ const translations = {
     };
 
     function setLanguage(lang) {
-      const dictionary = translations[lang];
+      const selectedLanguage = translations[lang] ? lang : "fr";
+      const dictionary = translations[selectedLanguage];
       if (!dictionary) return;
 
-      document.documentElement.lang = lang;
+      document.documentElement.lang = selectedLanguage;
       document.title = dictionary.page_title;
       document.querySelectorAll(".lang-btn").forEach(button => {
-        const isActive = button.dataset.lang === lang;
+        const isActive = button.dataset.lang === selectedLanguage;
         button.classList.toggle("active", isActive);
         button.setAttribute("aria-pressed", String(isActive));
       });
       document.querySelectorAll("[data-i18n]").forEach(element => {
         const value = dictionary[element.dataset.i18n];
-        if (value) element.innerHTML = value;
+        if (value !== undefined) element.innerHTML = value;
       });
-      saveLanguage(lang);
+      saveLanguage(selectedLanguage);
     }
 
     document.addEventListener("DOMContentLoaded", () => {
       const menuToggle = document.querySelector(".menu-toggle");
       const navigation = document.querySelector("#primary-navigation");
       const closeMenu = () => {
+        if (!navigation || !menuToggle) return;
         navigation.classList.remove("is-open");
         menuToggle.setAttribute("aria-expanded", "false");
+        menuToggle.setAttribute("aria-label", "Ouvrir le menu");
       };
 
-      menuToggle.addEventListener("click", () => {
-        const isOpen = navigation.classList.toggle("is-open");
-        menuToggle.setAttribute("aria-expanded", String(isOpen));
-      });
-      navigation.querySelectorAll("a").forEach(link => link.addEventListener("click", closeMenu));
+      if (menuToggle && navigation) {
+        menuToggle.addEventListener("click", () => {
+          const isOpen = navigation.classList.toggle("is-open");
+          menuToggle.setAttribute("aria-expanded", String(isOpen));
+          menuToggle.setAttribute("aria-label", isOpen ? "Fermer le menu" : "Ouvrir le menu");
+        });
+        navigation.querySelectorAll("a").forEach(link => link.addEventListener("click", closeMenu));
+        document.addEventListener("click", event => {
+          if (!navigation.contains(event.target) && !menuToggle.contains(event.target)) closeMenu();
+        });
+        document.addEventListener("keydown", event => {
+          if (event.key === "Escape") closeMenu();
+        });
+      }
+
       document.querySelectorAll(".lang-btn").forEach(button => {
         button.addEventListener("click", () => setLanguage(button.dataset.lang));
       });
@@ -229,7 +246,9 @@ const translations = {
         if (scrollFrame) return;
         scrollFrame = requestAnimationFrame(() => {
           updateActiveLink();
-          backToTop.classList.toggle("is-visible", window.scrollY > window.innerHeight);
+          if (backToTop) {
+            backToTop.classList.toggle("is-visible", window.scrollY > window.innerHeight);
+          }
           scrollFrame = null;
         });
       };
@@ -238,5 +257,6 @@ const translations = {
 
       const savedLanguage = readLanguage();
       setLanguage(savedLanguage === "en" ? "en" : "fr");
-      document.querySelector("#year").textContent = String(new Date().getFullYear());
+      const year = document.querySelector("#year");
+      if (year) year.textContent = String(new Date().getFullYear());
     });
