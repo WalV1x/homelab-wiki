@@ -455,7 +455,10 @@
       gap: 0.5rem;
       color: var(--text-muted);
       font-size: 0.85rem;
-      margin-top: 1.25rem;
+      margin-top: 1rem;
+      padding: 0.45rem 0.7rem;
+      border: 1px solid rgba(255, 255, 255, 0.08);
+      border-radius: 999px;
     }
     .status-line::before {
       content: "";
@@ -513,8 +516,8 @@
     .nav-links { gap: 2rem; }
     nav a.nav-link:hover, nav a.nav-link.active { color: var(--text-main); }
     .lang-switcher {
-      background: #171717;
-      border-color: #2a2a2a;
+      background: rgba(255, 255, 255, 0.015);
+      border: 1px solid rgba(255, 255, 255, 0.14);
       border-radius: 999px;
       padding: 2px;
     }
