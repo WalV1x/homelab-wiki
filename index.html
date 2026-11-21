@@ -134,10 +134,16 @@
       </svg>
     </div>
 
-    <!-- Image Proxmox -->
-    <div class="media-container reveal delay-2">
-      <img src="assets/images/miniPc/pve_dashboard.png" alt="Interface de gestion Proxmox VE" id="img-pve-alt" loading="lazy" decoding="async">
-      <div class="image-caption" data-i18n="pve_caption">L'interface centrale de mon hyperviseur Proxmox, montrant l'état des ressources matérielles et mes différents conteneurs actifs.</div>
+    <!-- Nœud Proxmox : Matériel physique & Hyperviseur -->
+    <div class="media-grid reveal delay-2">
+      <div class="media-container aspect-square">
+        <img src="assets/images/miniPc/miniPc-picture.jpg" alt="Nœud physique Proxmox - Mini PC AMD Ryzen 7" id="img-minipc-alt" loading="lazy" decoding="async" data-i18n-alt="pve_hw_alt">
+        <div class="image-caption" data-i18n="pve_hw_caption">Nœud physique Proxmox : Mini PC AMD Ryzen 7 5700U (8c/16t, 32 Go RAM, 1 To SSD NVMe), compact et économe pour une virtualisation 24/7.</div>
+      </div>
+      <div class="media-container aspect-square">
+        <img src="assets/images/miniPc/pve_dashboard.png" alt="Tableau de bord de gestion Proxmox VE" id="img-pve-alt" loading="lazy" decoding="async" data-i18n-alt="pve_alt">
+        <div class="image-caption" data-i18n="pve_caption">L'interface centrale de mon hyperviseur Proxmox VE : vue synthétique des ressources de l'hôte et orchestration des conteneurs LXC isolés.</div>
+      </div>
     </div>
   </section>
 
@@ -267,6 +273,42 @@
       <div class="bento-card reveal delay-2">
         <h3 data-i18n="dns_hw_title">Matériel sobre</h3>
         <p data-i18n="dns_hw_desc">Le tout tourne sur un Orange Pi Zero 3 d'1 Go de RAM : environ 150 Mo pour AdGuard Home avec plus de 500 000 règles chargées.</p>
+      </div>
+    </div>
+
+    <!-- Tableau de bord AdGuard Home -->
+    <div class="media-container reveal delay-1">
+      <img src="assets/images/orangePiZero3/adguard_home.png" alt="Tableau de bord AdGuard Home en production" id="img-adguard-alt" loading="lazy" decoding="async" data-i18n-alt="dns_adguard_alt">
+      <div class="image-caption" data-i18n="dns_adguard_caption">Tableau de bord AdGuard Home sur l'Orange Pi Zero 3 (192.168.1.60) : requêtes DNS locales, filtrage actif et Unbound (127.0.0.1:5335) configuré en amont.</div>
+    </div>
+
+    <!-- Nœud Orange Pi : Matériel & Listes HaGeZi -->
+    <div class="media-grid reveal delay-2">
+      <div class="media-container aspect-square">
+        <img src="assets/images/orangePiZero3/orangePi-pictures.jpg" alt="Nœud Réseau physique - Orange Pi Zero 3" id="img-opi-alt" loading="lazy" decoding="async" data-i18n-alt="dns_opi_alt">
+        <div class="image-caption" data-i18n="dns_opi_caption">Nœud Réseau physique : Orange Pi Zero 3 (Allwinner H618, 1 Go RAM) sous Armbian 26.11, assurant le filtrage DNS et le routage Tailscale 24/7.</div>
+      </div>
+      <div class="media-container aspect-square">
+        <img src="assets/images/orangePiZero3/filter_block_lst.png" alt="Listes de blocage HaGeZi dans AdGuard Home" id="img-filter-alt" loading="lazy" decoding="async" data-i18n-alt="dns_filter_alt">
+        <div class="image-caption" data-i18n="dns_filter_caption">Listes de blocage HaGeZi actives dans AdGuard Home : Pro++, TIF Mini (calibrée pour la contrainte de 1 Go de RAM), Apple Tracker et LG webOS (~483 000 règles).</div>
+      </div>
+    </div>
+
+    <!-- Résultats et audits d'efficacité -->
+    <div class="dns-test-intro reveal">
+      <span class="eyebrow" data-i18n="dns_audit_eyebrow">Validation & Efficacité</span>
+      <h3 data-i18n="dns_audit_title">Résultats des tests de protection.</h3>
+      <p class="body-text" data-i18n="dns_audit_desc">Mesures d'efficacité du filtrage DNS effectuées via les bancs d'essai de référence Adblock Test et What I Block.</p>
+    </div>
+
+    <div class="media-grid reveal delay-1">
+      <div class="media-container benchmark-media aspect-4-3">
+        <img src="assets/images/orangePiZero3/scoreBlock.png" alt="Banc d'essai Adblock Test - Score 89%" id="img-adblock-test-alt" loading="lazy" decoding="async" data-i18n-alt="dns_score_alt">
+        <div class="image-caption" data-i18n="dns_score_caption">Banc d'essai Adblock Test : score de protection global de 89% avec 444 requêtes bloquées sur 482 points de contrôle.</div>
+      </div>
+      <div class="media-container benchmark-media aspect-4-3">
+        <img src="assets/images/orangePiZero3/WhatIBlock_scoreBlock.png" alt="Audit What I Block par catégorie" id="img-whatiblock-alt" loading="lazy" decoding="async" data-i18n-alt="dns_whatiblock_alt">
+        <div class="image-caption" data-i18n="dns_whatiblock_caption">Audit What I Block : blocage à 100% des traceurs d'analyse et erreurs, 99% de la télémétrie constructeurs OEM et 98% des régies publicitaires.</div>
       </div>
     </div>
   </section>

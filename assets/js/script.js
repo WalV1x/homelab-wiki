@@ -33,7 +33,10 @@ const translations = {
     svg_encrypted_access: "Mon accès chiffré",
     svg_access_policy_title: "Politique d'accès",
     svg_access_policy_desc: "Jeux : Publics | Administration : VPN",
-    pve_caption: "L'interface centrale de mon hyperviseur Proxmox, montrant l'état des ressources matérielles et mes différents conteneurs actifs.",
+    pve_hw_alt: "Nœud physique Proxmox - Mini PC AMD Ryzen 7",
+    pve_hw_caption: "Nœud physique Proxmox : Mini PC AMD Ryzen 7 5700U (8c/16t, 32 Go RAM, 1 To SSD NVMe), compact et économe pour une virtualisation 24/7.",
+    pve_alt: "Tableau de bord de gestion Proxmox VE",
+    pve_caption: "L'interface centrale de mon hyperviseur Proxmox VE : vue synthétique des ressources de l'hôte et orchestration des conteneurs LXC isolés.",
     services_eyebrow: "Administration système & Réseau",
     services_title: "Les services que j'héberge.",
     services_desc: "J'ai fait le choix de virtualiser chaque outil dans des conteneurs LXC indépendants afin de compartimenter les pannes et d'optimiser les ressources de mon serveur.",
@@ -67,6 +70,19 @@ const translations = {
     dns_ts_desc: "Mes appareils nomades utilisent ce DNS à travers Tailscale, avec une politique d'accès (ACL) qui n'autorise que le port DNS vers le serveur.",
     dns_hw_title: "Matériel sobre",
     dns_hw_desc: "Le tout tourne sur un Orange Pi Zero 3 d'1 Go de RAM : environ 150 Mo pour AdGuard Home avec environ 500 000 règles chargées.",
+    dns_adguard_alt: "Tableau de bord AdGuard Home en production",
+    dns_adguard_caption: "Tableau de bord AdGuard Home sur l'Orange Pi Zero 3 (192.168.1.60) : requêtes DNS locales, filtrage actif et Unbound (127.0.0.1:5335) configuré en amont.",
+    dns_opi_alt: "Nœud Réseau physique - Orange Pi Zero 3",
+    dns_opi_caption: "Nœud Réseau physique : Orange Pi Zero 3 (Allwinner H618, 1 Go RAM) sous Armbian 26.11, assurant le filtrage DNS et le routage Tailscale 24/7.",
+    dns_filter_alt: "Listes de blocage HaGeZi dans AdGuard Home",
+    dns_filter_caption: "Listes de blocage HaGeZi actives dans AdGuard Home : Pro++, TIF Mini (calibrée pour la contrainte de 1 Go de RAM), Apple Tracker et LG webOS (~483 000 règles).",
+    dns_audit_eyebrow: "Validation & Efficacité",
+    dns_audit_title: "Résultats des tests de protection.",
+    dns_audit_desc: "Mesures d'efficacité du filtrage DNS effectuées via les bancs d'essai de référence Adblock Test et What I Block.",
+    dns_score_alt: "Banc d'essai Adblock Test - Score 89%",
+    dns_score_caption: "Banc d'essai Adblock Test : score de protection global de 89% avec 444 requêtes bloquées sur 482 points de contrôle.",
+    dns_whatiblock_alt: "Audit What I Block par catégorie",
+    dns_whatiblock_caption: "Audit What I Block : blocage à 100% des traceurs d'analyse et erreurs, 99% de la télémétrie constructeurs OEM et 98% des régies publicitaires.",
     sec_eyebrow: "Bonnes pratiques",
     sec_title: "Mes mesures de sécurité.",
     sec_lead: "Gérer un serveur connecté à internet implique des risques. Voici les règles que je m'impose.",
@@ -129,7 +145,10 @@ const translations = {
     svg_encrypted_access: "Encrypted Access",
     svg_access_policy_title: "Access Policy",
     svg_access_policy_desc: "Gaming: Public | Admin: VPN",
-    pve_caption: "Central dashboard of my Proxmox hypervisor, displaying hardware resource utilization and active LXC containers.",
+    pve_hw_alt: "Physical Proxmox node - Mini PC AMD Ryzen 7",
+    pve_hw_caption: "Physical Proxmox node: Mini PC AMD Ryzen 7 5700U (8c/16t, 32GB RAM, 1TB NVMe SSD), compact and energy-efficient for 24/7 virtualization.",
+    pve_alt: "Proxmox VE management dashboard",
+    pve_caption: "Central dashboard of my Proxmox VE hypervisor: synthetic view of host resources and orchestration of isolated LXC containers.",
     services_eyebrow: "System & Network Administration",
     services_title: "Hosted Services.",
     services_desc: "I chose to virtualize each tool inside independent LXC containers to isolate faults and optimize overall server resources.",
@@ -163,6 +182,19 @@ const translations = {
     dns_ts_desc: "My mobile devices use this DNS through Tailscale, with an access policy (ACL) that only allows the DNS port to the server.",
     dns_hw_title: "Lean Hardware",
     dns_hw_desc: "It all runs on a 1 GB RAM Orange Pi Zero 3: about 150 MB for AdGuard Home with about 500,000 rules loaded.",
+    dns_adguard_alt: "AdGuard Home production dashboard",
+    dns_adguard_caption: "AdGuard Home dashboard on Orange Pi Zero 3 (192.168.1.60): live DNS queries, active filtering, and local Unbound resolver (127.0.0.1:5335) as upstream.",
+    dns_opi_alt: "Physical Network node - Orange Pi Zero 3",
+    dns_opi_caption: "Physical Network node: Orange Pi Zero 3 (Allwinner H618, 1GB RAM) running Armbian 26.11, providing DNS filtering and Tailscale routing 24/7.",
+    dns_filter_alt: "HaGeZi blocklists configured in AdGuard Home",
+    dns_filter_caption: "Active HaGeZi blocklists in AdGuard Home: Pro++, TIF Mini (tuned for the 1GB RAM constraint), Apple Tracker, and LG webOS (~483,000 rules).",
+    dns_audit_eyebrow: "Validation & Efficacy",
+    dns_audit_title: "Protection Benchmark Results.",
+    dns_audit_desc: "DNS filtering efficiency benchmarks conducted through industry-standard Adblock Test and What I Block test suites.",
+    dns_score_alt: "Adblock Test benchmark - 89% score",
+    dns_score_caption: "Adblock Test benchmark: 89% overall protection score with 444 ad/tracker requests blocked out of 482 checks.",
+    dns_whatiblock_alt: "What I Block category audit",
+    dns_whatiblock_caption: "What I Block audit: 100% block rate on analytics & error trackers, 99% on OEM vendor telemetry, and 98% on ad networks.",
     sec_eyebrow: "Best Practices",
     sec_title: "Security Hardening.",
     sec_lead: "Hosting services connected to the internet carries inherent risks. Here are the security policies I enforce.",
@@ -224,6 +256,10 @@ function setLanguage(lang) {
   document.querySelectorAll("[data-i18n]").forEach(element => {
     const value = dictionary[element.dataset.i18n];
     if (value !== undefined) element.innerHTML = value;
+  });
+  document.querySelectorAll("[data-i18n-alt]").forEach(element => {
+    const value = dictionary[element.dataset.i18nAlt];
+    if (value !== undefined) element.setAttribute("alt", value);
   });
   saveLanguage(selectedLanguage);
 }
@@ -299,4 +335,49 @@ document.addEventListener("DOMContentLoaded", () => {
   setLanguage(savedLanguage === "en" ? "en" : "fr");
   const year = document.querySelector("#year");
   if (year) year.textContent = String(new Date().getFullYear());
+
+  // Visionneuse interactive (Lightbox)
+  const lightbox = document.createElement("div");
+  lightbox.className = "lightbox-modal";
+  lightbox.setAttribute("role", "dialog");
+  lightbox.setAttribute("aria-modal", "true");
+  lightbox.setAttribute("aria-label", "Vue agrandie de l'image");
+  lightbox.innerHTML = `
+    <div class="lightbox-content">
+      <button class="lightbox-close" type="button" aria-label="Fermer la vue agrandie">&times;</button>
+      <img class="lightbox-img" src="" alt="">
+      <p class="lightbox-caption"></p>
+    </div>
+  `;
+  document.body.appendChild(lightbox);
+
+  const lbImg = lightbox.querySelector(".lightbox-img");
+  const lbCaption = lightbox.querySelector(".lightbox-caption");
+  const lbClose = lightbox.querySelector(".lightbox-close");
+
+  const closeLightbox = () => {
+    lightbox.classList.remove("is-active");
+    document.body.style.overflow = "";
+  };
+
+  document.querySelectorAll(".media-container img").forEach(img => {
+    img.addEventListener("click", () => {
+      lbImg.src = img.src;
+      lbImg.alt = img.alt;
+      const captionEl = img.parentElement.querySelector(".image-caption");
+      lbCaption.textContent = captionEl ? captionEl.textContent : img.alt;
+      lightbox.classList.add("is-active");
+      document.body.style.overflow = "hidden";
+    });
+  });
+
+  lbClose.addEventListener("click", closeLightbox);
+  lightbox.addEventListener("click", event => {
+    if (event.target === lightbox) closeLightbox();
+  });
+  document.addEventListener("keydown", event => {
+    if (event.key === "Escape" && lightbox.classList.contains("is-active")) {
+      closeLightbox();
+    }
+  });
 });
