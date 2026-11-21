@@ -9,277 +9,351 @@
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
   <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&display=swap" rel="stylesheet">
-      <link rel="stylesheet" href="assets/css/styles.css">
+  <link rel="stylesheet" href="assets/css/styles.css">
 </head>
 <body>
 
-  <a class="skip-link" href="#contenu">Aller au contenu</a>
-  <header>
-    <nav>
-      <a href="#hero" class="brand">Liandro / Homelab</a>
-      <div class="nav-links" id="primary-navigation">
-        <a href="#overview" class="nav-link" data-i18n="nav_overview">Vue d'ensemble</a>
-        <a href="#architecture" class="nav-link" data-i18n="nav_arch">Architecture</a>
-        <a href="#services" class="nav-link" data-i18n="nav_services">Services</a>
-        <a href="#securite" class="nav-link" data-i18n="nav_security">Sécurité</a>
-        <a href="#supervision" class="nav-link" data-i18n="nav_monitoring">Supervision</a>
-        <a href="#futur" class="nav-link" data-i18n="nav_future">Projets futurs</a>
-      </div>
-      <div class="lang-switcher">
-        <button class="lang-btn active" type="button" data-lang="fr" aria-pressed="true">FR</button>
-        <button class="lang-btn" type="button" data-lang="en" aria-pressed="false">EN</button>
-      </div>
-      <button class="menu-toggle" type="button" aria-controls="primary-navigation" aria-expanded="false" aria-label="Ouvrir le menu">
-        <svg width="20" height="20" viewBox="0 0 24 24" aria-hidden="true"><path d="M4 7h16M4 12h16M4 17h16" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"/></svg>
-      </button>
-    </nav>
-  </header>
-
-  <main id="contenu">
-    <!-- HERO -->
-    <section id="hero" class="hero-section">
-      <div class="reveal">
-        <span class="eyebrow" data-i18n="hero_eyebrow">Portfolio · Projet Personnel</span>
-        <h1 data-i18n="hero_title">Mon Homelab<br>Proxmox.</h1>
-        <p class="lead" data-i18n="hero_lead">Un environnement que j'ai monté de A à Z pour expérimenter la virtualisation, l’administration système et la sécurité réseau par la pratique.</p>
-        <a class="btn" href="https://www.linkedin.com/in/lndr/" target="_blank" rel="noopener noreferrer" data-i18n="hero_btn">Consulter mon profil LinkedIn</a>
-      </div>
-    </section>
-
-    <!-- VUE D'ENSEMBLE -->
-    <section id="overview" class="section-left overview-section">
-      <div class="reveal">
-        <span class="eyebrow" data-i18n="overview_eyebrow">En un coup d'œil</span>
-        <h2 data-i18n="overview_title">Un laboratoire pensé pour apprendre.</h2>
-        <p class="body-text" data-i18n="overview_desc">Une infrastructure personnelle où chaque service répond à un objectif concret : héberger, sécuriser, sauvegarder et observer.</p>
-        <span class="status-line" data-i18n="hero_status">Homelab actif · documentation en évolution</span>
-      </div>
-      <div class="stats-grid">
-        <article class="stat-card reveal">
-          <strong>08</strong>
-          <span data-i18n="overview_stat_services">services hébergés</span>
-        </article>
-        <article class="stat-card reveal delay-1">
-          <strong>LXC</strong>
-          <span data-i18n="overview_stat_virtualization">conteneurs virtualisés</span>
-        </article>
-        <article class="stat-card reveal delay-2">
-          <strong>24/7</strong>
-          <span data-i18n="overview_stat_monitoring">supervision active</span>
-        </article>
-      </div>
-      <div class="tech-list reveal">
-        <span data-i18n="overview_stack_label">Stack principale</span>
-        <div class="tech-pills" aria-label="Technologies utilisées">
-          <span>Proxmox VE</span><span>Cloudflare</span><span>Nginx Proxy Manager</span>
-          <span>Tailscale</span><span>Fail2ban</span><span>Beszel</span>
-        </div>
-      </div>
-    </section>
-
-    <!-- ARCHITECTURE -->
-    <section id="architecture">
-      <div class="reveal">
-        <span class="eyebrow" data-i18n="arch_eyebrow">Conception & Hyperviseur</span>
-        <h2 data-i18n="arch_title">Architecture logique.</h2>
-        <p class="lead" data-i18n="arch_lead">Ma démarche pour isoler le réseau privé et sécuriser l'exposition de certains services sur internet.</p>
-      </div>
-
-      <!-- Schéma SVG -->
-      <div class="media-container arch-svg reveal delay-1">
-        <svg viewBox="0 0 900 420" role="img">
-          <defs>
-            <marker id="arrow" markerWidth="8" markerHeight="8" refX="6" refY="3" orient="auto"><path d="M0,0 L6,3 L0,6 Z" fill="#86868b"/></marker>
-          </defs>
-          <g font-family="Inter, sans-serif" text-anchor="middle">
-            <rect x="20" y="34" width="160" height="66" />
-            <text x="100" y="62" font-size="14" fill="#f5f5f7">Internet</text>
-            <text x="100" y="81" font-size="11" data-i18n="svg_public_access">Accès public</text>
-
-            <rect x="230" y="34" width="180" height="66" />
-            <text x="320" y="62" font-size="14" fill="#f5f5f7">Cloudflare DNS</text>
-            <text x="320" y="81" font-size="11" data-i18n="svg_proxy_res">Résolution proxy</text>
-
-            <rect x="460" y="34" width="205" height="66" />
-            <text x="562" y="61" font-size="14" fill="#f5f5f7">Nginx Proxy Manager</text>
-            <text x="562" y="81" font-size="11">Reverse proxy</text>
-
-            <rect x="715" y="34" width="165" height="66" />
-            <text x="797" y="61" font-size="14" fill="#f5f5f7" data-i18n="svg_lxc">Conteneurs LXC</text>
-            <text x="797" y="81" font-size="11" data-i18n="svg_hosted_services">Mes services hébergés</text>
-
-            <path d="M180 67 H225" fill="none" marker-end="url(#arrow)"/>
-            <path d="M410 67 H455" fill="none" marker-end="url(#arrow)"/>
-            <path d="M665 67 H710" fill="none" marker-end="url(#arrow)"/>
-
-            <rect x="230" y="175" width="435" height="92" stroke-dasharray="4 4"/>
-            <text x="447" y="202" font-size="11" letter-spacing="1.3" data-i18n="svg_physical_server">SERVEUR PHYSIQUE</text>
-            <rect x="257" y="216" width="381" height="34" />
-            <text x="447" y="238" font-size="13" fill="#f5f5f7">Proxmox VE (Hyperviseur)</text>
-
-            <path d="M797 101 V146 H638 V232" stroke-dasharray="4 4" fill="none" marker-end="url(#arrow)"/>
-
-            <rect x="20" y="305" width="260" height="77" />
-            <text x="150" y="333" font-size="14" fill="#f5f5f7">Tailscale VPN</text>
-            <text x="150" y="354" font-size="12" data-i18n="svg_encrypted_access">Mon accès chiffré</text>
-
-            <path d="M280 343 H350 V267" fill="none" marker-end="url(#arrow)"/>
-
-            <rect x="480" y="305" width="400" height="77" />
-            <text x="680" y="333" font-size="13" fill="#f5f5f7" data-i18n="svg_access_policy_title">Politique d'accès</text>
-            <text x="680" y="354" font-size="12" data-i18n="svg_access_policy_desc">Jeux : Publics | Administration : VPN</text>
-          </g>
-        </svg>
-      </div>
-
-      <!-- Image Proxmox -->
-      <div class="media-container reveal delay-2">
-        <img src="assets/images/pve_dashboard.png" alt="Interface de gestion Proxmox VE" id="img-pve-alt" loading="lazy" decoding="async">
-        <div class="image-caption" data-i18n="pve_caption">L'interface centrale de mon hyperviseur Proxmox, montrant l'état des ressources matérielles et mes différents conteneurs actifs.</div>
-      </div>
-    </section>
-
-    <!-- SERVICES -->
-    <section id="services" class="section-left">
-      <div class="reveal">
-        <span class="eyebrow" data-i18n="services_eyebrow">Administration système & Réseau</span>
-        <h2 data-i18n="services_title">Les services que j'héberge.</h2>
-        <p class="body-text" data-i18n="services_desc">J'ai fait le choix de virtualiser chaque outil dans des conteneurs LXC indépendants afin de compartimenter les pannes et d'optimiser les ressources de mon serveur.</p>
-      </div>
-
-      <div class="bento-grid">
-        <div class="bento-card reveal">
-          <span class="tag red" data-i18n="tag_public">Exposé publiquement</span>
-          <h3>Pelican Panel</h3>
-          <p data-i18n="pelican_panel_desc">Interface d'administration de mon infrastructure de serveurs de jeux Minecraft et Satisfactory.</p>
-        </div>
-        <div class="bento-card reveal delay-1">
-          <span class="tag green" data-i18n="tag_vpn">Protégé par VPN</span>
-          <h3>Pelican Wings</h3>
-          <p data-i18n="pelican_wings_desc">Agent d'exécution qui lance et gère les serveurs de jeux pilotés depuis Pelican Panel.</p>
-        </div>
-        <div class="bento-card reveal delay-2">
-          <span class="tag green" data-i18n="tag_vpn">Protégé par VPN</span>
-          <h3>Nginx Proxy Manager</h3>
-          <p data-i18n="npm_desc">Gestionnaire de routage. Il sécurise mes connexions externes, configure mes hôtes virtuels et gère automatiquement mes certificats SSL Let's Encrypt.</p>
-        </div>
-        <div class="bento-card reveal">
-          <span class="tag green" data-i18n="tag_vpn">Protégé par VPN</span>
-          <h3>Beszel</h3>
-          <p data-i18n="beszel_desc">Outil de supervision utilisé pour suivre la santé du serveur, ses ressources et son activité réseau.</p>
-        </div>
-        <div class="bento-card reveal delay-1">
-          <span class="tag green" data-i18n="tag_vpn">Protégé par VPN</span>
-          <h3>Proxmox Backup Server</h3>
-          <p data-i18n="pbs_desc">Ma solution de sauvegarde. Je l'ai configurée pour effectuer des sauvegardes incrémentales et dédupliquées de mes machines virtuelles.</p>
-        </div>
-        <div class="bento-card reveal delay-2">
-          <span class="tag green" data-i18n="tag_vpn">Protégé par VPN</span>
-          <h3>Immich</h3>
-          <p data-i18n="immich_desc">Une alternative à Google Photos que j'auto-héberge. Cela me permet de tester la gestion de stockage intensif et le traitement d'images par IA locale.</p>
-        </div>
-        <div class="bento-card reveal delay-1">
-          <span class="tag green" data-i18n="tag_vpn">Protégé par VPN</span>
-          <h3>Filebrowser</h3>
-          <p data-i18n="filebrowser_desc">Une interface web allégée et ultra-rapide pour la gestion, le partage et la navigation dans mes fichiers distants en toute sécurité.</p>
-        </div>
-        <div class="bento-card reveal delay-2">
-          <span class="tag green" data-i18n="tag_vpn">Protégé par VPN</span>
-          <h3>Speedtest-tracker</h3>
-          <p data-i18n="speedtest_desc">Un outil automatisé que j'ai mis en place pour générer un historique constant de la stabilité et du débit de ma connexion internet.</p>
-        </div>
-      </div>
-
-      <!-- Image NPM (Réseau) -->
-      <div class="media-container npm-media reveal">
-        <img src="assets/images/npm_dashboard.png" alt="Tableau de bord Nginx Proxy Manager" id="img-npm-alt" loading="lazy" decoding="async">
-        <div class="image-caption" data-i18n="npm_caption">Configuration de Nginx Proxy Manager : gestion du routage DNS et génération automatisée de certificats SSL Let's Encrypt.</div>
-      </div>
-    </section>
-
-    <!-- SÉCURITÉ -->
-    <section id="securite">
-      <div class="reveal">
-        <span class="eyebrow" data-i18n="sec_eyebrow">Bonnes pratiques</span>
-        <h2 data-i18n="sec_title">Mes mesures de sécurité.</h2>
-        <p class="lead" data-i18n="sec_lead">Gérer un serveur connecté à internet implique des risques. Voici les règles que je m'impose.</p>
-      </div>
-
-      <ul class="clean-list reveal delay-1">
-        <li>
-          <strong data-i18n="sec_zt_title">Réseau Zero-Trust (Tailscale)</strong>
-          <span data-i18n="sec_zt_desc">Je n'ouvre aucun port d'administration (SSH, Proxmox) sur ma box internet. Tout accès distant nécessite une connexion à mon tunnel VPN WireGuard.</span>
-        </li>
-        <li>
-          <strong data-i18n="sec_f2b_title">Prévention d'intrusions (Fail2ban)</strong>
-          <span data-i18n="sec_f2b_desc">J'ai configuré Fail2ban pour bannir automatiquement les adresses IP qui tenteraient de forcer l'accès (brute-force) à mes services exposés.</span>
-        </li>
-        <li>
-          <strong data-i18n="sec_mfa_title">MFA & Gestion des accès</strong>
-          <span data-i18n="sec_mfa_desc">J'impose une double authentification (TOTP) sur tous mes panneaux de contrôle et l'accès Root par mot de passe est désactivé au profit de clés SSH privées.</span>
-        </li>
-      </ul>
-    </section>
-
-    <!-- SUPERVISION -->
-    <section id="supervision">
-      <div class="reveal">
-        <span class="eyebrow" data-i18n="mon_eyebrow">Observabilité</span>
-        <h2 data-i18n="mon_title">Supervision du matériel.</h2>
-        <p class="body-text" data-i18n="mon_desc">J'utilise l'API de Proxmox couplée à <strong>Beszel</strong> pour monitorer la santé de ma machine au quotidien (CPU, RAM, état des disques, températures).</p>
-      </div>
-
-      <!-- Image Beszel -->
-      <div class="media-container monitoring-media reveal delay-1">
-        <img src="assets/images/monitor_dashboard.png" alt="Tableau de bord de monitoring Beszel" id="img-beszel-alt" loading="lazy" decoding="async">
-        <div class="image-caption" data-i18n="mon_caption">Surveillance en temps réel des charges système, du réseau et de l'espace disque via Beszel.</div>
-      </div>
-    </section>
-
-    <!-- FUTUR & APPRENTISSAGES -->
-    <section id="futur" class="section-left">
-      <div class="reveal">
-        <span class="eyebrow" data-i18n="fut_eyebrow">Mes prochains projets</span>
-        <h2 data-i18n="fut_title">Évolutions prévues.</h2>
-        <p class="body-text" data-i18n="fut_desc">Mon infrastructure est mon terrain de jeu. Voici ce que je compte y intégrer prochainement :</p>
-      </div>
-
-      <div class="bento-grid">
-        <div class="bento-card wide reveal">
-          <h3 data-i18n="fut_pihole_title">Filtrage DNS & Sécurité</h3>
-          <p data-i18n="fut_pihole_desc">Mon prochain défi est de configurer un Raspberry Pi avec Pi-hole pour intercepter et bloquer le trafic publicitaire et la télémétrie sur l'ensemble de mon réseau domestique.</p>
-        </div>
-        <div class="bento-card reveal delay-1">
-          <h3 data-i18n="fut_vps_title">Serveur Relais (VPS)</h3>
-          <p data-i18n="fut_vps_desc">Je souhaite acquérir un VPS distant qui fera office de bouclier, afin de masquer définitivement mon adresse IP résidentielle lorsque j'expose un service.</p>
-        </div>
-        <div class="bento-card reveal delay-2">
-          <h3 data-i18n="fut_nas_title">NAS Personnel</h3>
-          <p data-i18n="fut_nas_desc">Je compte installer TrueNAS et configurer une grappe RAID de 2 disques (4 To) pour mieux comprendre la redondance matérielle et sécuriser les données familiales.</p>
-        </div>
-        <div class="bento-card reveal">
-          <h3 data-i18n="fut_hw_title">Mise à niveau matérielle</h3>
-          <p data-i18n="fut_hw_desc">J'ai prévu de doubler la mémoire vive de mon serveur (passage à 64 Go) et d'ajouter des disques NVMe pour supporter la charge de mes futurs conteneurs.</p>
-        </div>
-        <div class="bento-card reveal delay-1">
-          <h3 data-i18n="fut_ai_title">Infrastructure IA</h3>
-          <p data-i18n="fut_ai_desc">Je m'intéresse de plus en plus à l'hébergement local de modèles de langage (LLM). Je souhaite dédier une partie de mes ressources pour expérimenter avec Ollama.</p>
-        </div>
-      </div>
-
-    </section>
-  </main>
-
-  <footer>
-    <p><span data-i18n="footer_text">Conçu et administré par Liandro Gameiro da Silva — HEG-Genève</span> · <span id="year">2026</span></p>
-    <div class="footer-links" aria-label="Réseaux professionnels">
-      <a href="https://www.linkedin.com/in/lndr/" target="_blank" rel="noopener noreferrer" data-i18n="footer_linkedin">LinkedIn</a>
-      <a href="https://github.com/WalV1x/" target="_blank" rel="noopener noreferrer" data-i18n="footer_github">GitHub</a>
+<a class="skip-link" href="#contenu">Aller au contenu</a>
+<header>
+  <nav>
+    <a href="#hero" class="brand">Liandro / Homelab</a>
+    <div class="nav-links" id="primary-navigation">
+      <a href="#overview" class="nav-link" data-i18n="nav_overview">Vue d'ensemble</a>
+      <a href="#architecture" class="nav-link" data-i18n="nav_arch">Architecture</a>
+      <a href="#services" class="nav-link" data-i18n="nav_services">Services</a>
+      <a href="#dns" class="nav-link" data-i18n="nav_dns">Filtrage DNS</a>
+      <a href="#securite" class="nav-link" data-i18n="nav_security">Sécurité</a>
+      <a href="#supervision" class="nav-link" data-i18n="nav_monitoring">Supervision</a>
+      <a href="#futur" class="nav-link" data-i18n="nav_future">Projets futurs</a>
     </div>
-  </footer>
-  <a class="back-to-top" href="#hero" aria-label="Retour en haut">↑</a>
+    <div class="lang-switcher">
+      <button class="lang-btn active" type="button" data-lang="fr" aria-pressed="true">FR</button>
+      <button class="lang-btn" type="button" data-lang="en" aria-pressed="false">EN</button>
+    </div>
+    <button class="menu-toggle" type="button" aria-controls="primary-navigation" aria-expanded="false" aria-label="Ouvrir le menu">
+      <svg width="20" height="20" viewBox="0 0 24 24" aria-hidden="true"><path d="M4 7h16M4 12h16M4 17h16" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"/></svg>
+    </button>
+  </nav>
+</header>
 
-  <!-- Script pour les animations au scroll et la traduction -->
-    <script src="assets/js/script.js" defer></script>
+<main id="contenu">
+  <!-- HERO -->
+  <section id="hero" class="hero-section">
+    <div class="reveal">
+      <span class="eyebrow" data-i18n="hero_eyebrow">Portfolio · Projet Personnel</span>
+      <h1 data-i18n="hero_title">Mon Homelab<br>Proxmox.</h1>
+      <p class="lead" data-i18n="hero_lead">Un environnement que j'ai monté de A à Z pour expérimenter la virtualisation, l’administration système et la sécurité réseau par la pratique.</p>
+      <a class="btn" href="https://www.linkedin.com/in/lndr/" target="_blank" rel="noopener noreferrer" data-i18n="hero_btn">Consulter mon profil LinkedIn</a>
+    </div>
+  </section>
+
+  <!-- VUE D'ENSEMBLE -->
+  <section id="overview" class="section-left overview-section">
+    <div class="reveal">
+      <span class="eyebrow" data-i18n="overview_eyebrow">En un coup d'œil</span>
+      <h2 data-i18n="overview_title">Un laboratoire pensé pour apprendre.</h2>
+      <p class="body-text" data-i18n="overview_desc">Une infrastructure personnelle où chaque service répond à un objectif concret : héberger, sécuriser, sauvegarder et observer.</p>
+      <span class="status-line" data-i18n="hero_status">Homelab actif · documentation en évolution</span>
+    </div>
+    <div class="stats-grid">
+      <article class="stat-card reveal">
+        <strong>08</strong>
+        <span data-i18n="overview_stat_services">services hébergés</span>
+      </article>
+      <article class="stat-card reveal delay-1">
+        <strong>LXC</strong>
+        <span data-i18n="overview_stat_virtualization">conteneurs virtualisés</span>
+      </article>
+      <article class="stat-card reveal delay-2">
+        <strong>24/7</strong>
+        <span data-i18n="overview_stat_monitoring">supervision active</span>
+      </article>
+    </div>
+    <div class="tech-list reveal">
+      <span data-i18n="overview_stack_label">Stack principale</span>
+      <div class="tech-pills" aria-label="Technologies utilisées">
+        <span>Proxmox VE</span><span>Cloudflare</span><span>Nginx Proxy Manager</span>
+        <span>Tailscale</span><span>Fail2ban</span><span>Beszel</span>
+        <span>AdGuard Home</span><span>Unbound</span>
+      </div>
+    </div>
+  </section>
+
+  <!-- ARCHITECTURE -->
+  <section id="architecture">
+    <div class="reveal">
+      <span class="eyebrow" data-i18n="arch_eyebrow">Conception & Hyperviseur</span>
+      <h2 data-i18n="arch_title">Architecture logique.</h2>
+      <p class="lead" data-i18n="arch_lead">Ma démarche pour isoler le réseau privé et sécuriser l'exposition de certains services sur internet.</p>
+    </div>
+
+    <!-- Schéma SVG -->
+    <div class="media-container arch-svg reveal delay-1">
+      <svg viewBox="0 0 900 420" role="img">
+        <defs>
+          <marker id="arrow" markerWidth="8" markerHeight="8" refX="6" refY="3" orient="auto"><path d="M0,0 L6,3 L0,6 Z" fill="#86868b"/></marker>
+        </defs>
+        <g font-family="Inter, sans-serif" text-anchor="middle">
+          <rect x="20" y="34" width="160" height="66" />
+          <text x="100" y="62" font-size="14" fill="#f5f5f7">Internet</text>
+          <text x="100" y="81" font-size="11" data-i18n="svg_public_access">Accès public</text>
+
+          <rect x="230" y="34" width="180" height="66" />
+          <text x="320" y="62" font-size="14" fill="#f5f5f7">Cloudflare DNS</text>
+          <text x="320" y="81" font-size="11" data-i18n="svg_proxy_res">Résolution proxy</text>
+
+          <rect x="460" y="34" width="205" height="66" />
+          <text x="562" y="61" font-size="14" fill="#f5f5f7">Nginx Proxy Manager</text>
+          <text x="562" y="81" font-size="11">Reverse proxy</text>
+
+          <rect x="715" y="34" width="165" height="66" />
+          <text x="797" y="61" font-size="14" fill="#f5f5f7" data-i18n="svg_lxc">Conteneurs LXC</text>
+          <text x="797" y="81" font-size="11" data-i18n="svg_hosted_services">Mes services hébergés</text>
+
+          <path d="M180 67 H225" fill="none" marker-end="url(#arrow)"/>
+          <path d="M410 67 H455" fill="none" marker-end="url(#arrow)"/>
+          <path d="M665 67 H710" fill="none" marker-end="url(#arrow)"/>
+
+          <rect x="230" y="175" width="435" height="92" stroke-dasharray="4 4"/>
+          <text x="447" y="202" font-size="11" letter-spacing="1.3" data-i18n="svg_physical_server">SERVEUR PHYSIQUE</text>
+          <rect x="257" y="216" width="381" height="34" />
+          <text x="447" y="238" font-size="13" fill="#f5f5f7">Proxmox VE (Hyperviseur)</text>
+
+          <path d="M797 101 V146 H638 V232" stroke-dasharray="4 4" fill="none" marker-end="url(#arrow)"/>
+
+          <rect x="20" y="305" width="260" height="77" />
+          <text x="150" y="333" font-size="14" fill="#f5f5f7">Tailscale VPN</text>
+          <text x="150" y="354" font-size="12" data-i18n="svg_encrypted_access">Mon accès chiffré</text>
+
+          <path d="M280 343 H350 V267" fill="none" marker-end="url(#arrow)"/>
+
+          <rect x="480" y="305" width="400" height="77" />
+          <text x="680" y="333" font-size="13" fill="#f5f5f7" data-i18n="svg_access_policy_title">Politique d'accès</text>
+          <text x="680" y="354" font-size="12" data-i18n="svg_access_policy_desc">Jeux : Publics | Administration : VPN</text>
+        </g>
+      </svg>
+    </div>
+
+    <!-- Image Proxmox -->
+    <div class="media-container reveal delay-2">
+      <img src="assets/images/miniPc/pve_dashboard.png" alt="Interface de gestion Proxmox VE" id="img-pve-alt" loading="lazy" decoding="async">
+      <div class="image-caption" data-i18n="pve_caption">L'interface centrale de mon hyperviseur Proxmox, montrant l'état des ressources matérielles et mes différents conteneurs actifs.</div>
+    </div>
+  </section>
+
+  <!-- SERVICES -->
+  <section id="services" class="section-left">
+    <div class="reveal">
+      <span class="eyebrow" data-i18n="services_eyebrow">Administration système & Réseau</span>
+      <h2 data-i18n="services_title">Les services que j'héberge.</h2>
+      <p class="body-text" data-i18n="services_desc">J'ai fait le choix de virtualiser chaque outil dans des conteneurs LXC indépendants afin de compartimenter les pannes et d'optimiser les ressources de mon serveur.</p>
+    </div>
+
+    <div class="bento-grid">
+      <div class="bento-card reveal">
+        <span class="tag red" data-i18n="tag_public">Exposé publiquement</span>
+        <h3>Pelican Panel</h3>
+        <p data-i18n="pelican_panel_desc">Interface d'administration de mon infrastructure de serveurs de jeux Minecraft et Satisfactory.</p>
+      </div>
+      <div class="bento-card reveal delay-1">
+        <span class="tag green" data-i18n="tag_vpn">Protégé par VPN</span>
+        <h3>Pelican Wings</h3>
+        <p data-i18n="pelican_wings_desc">Agent d'exécution qui lance et gère les serveurs de jeux pilotés depuis Pelican Panel.</p>
+      </div>
+      <div class="bento-card reveal delay-2">
+        <span class="tag green" data-i18n="tag_vpn">Protégé par VPN</span>
+        <h3>Nginx Proxy Manager</h3>
+        <p data-i18n="npm_desc">Gestionnaire de routage. Il sécurise mes connexions externes, configure mes hôtes virtuels et gère automatiquement mes certificats SSL Let's Encrypt.</p>
+      </div>
+      <div class="bento-card reveal">
+        <span class="tag green" data-i18n="tag_vpn">Protégé par VPN</span>
+        <h3>Beszel</h3>
+        <p data-i18n="beszel_desc">Outil de supervision utilisé pour suivre la santé du serveur, ses ressources et son activité réseau.</p>
+      </div>
+      <div class="bento-card reveal delay-1">
+        <span class="tag green" data-i18n="tag_vpn">Protégé par VPN</span>
+        <h3>Proxmox Backup Server</h3>
+        <p data-i18n="pbs_desc">Ma solution de sauvegarde. Je l'ai configurée pour effectuer des sauvegardes incrémentales et dédupliquées de mes machines virtuelles.</p>
+      </div>
+      <div class="bento-card reveal delay-2">
+        <span class="tag green" data-i18n="tag_vpn">Protégé par VPN</span>
+        <h3>Immich</h3>
+        <p data-i18n="immich_desc">Une alternative à Google Photos que j'auto-héberge. Cela me permet de tester la gestion de stockage intensif et le traitement d'images par IA locale.</p>
+      </div>
+      <div class="bento-card reveal delay-1">
+        <span class="tag green" data-i18n="tag_vpn">Protégé par VPN</span>
+        <h3>Filebrowser</h3>
+        <p data-i18n="filebrowser_desc">Une interface web allégée et ultra-rapide pour la gestion, le partage et la navigation dans mes fichiers distants en toute sécurité.</p>
+      </div>
+      <div class="bento-card reveal delay-2">
+        <span class="tag green" data-i18n="tag_vpn">Protégé par VPN</span>
+        <h3>Speedtest-tracker</h3>
+        <p data-i18n="speedtest_desc">Un outil automatisé que j'ai mis en place pour générer un historique constant de la stabilité et du débit de ma connexion internet.</p>
+      </div>
+    </div>
+
+    <!-- Image NPM (Réseau) -->
+    <div class="media-container npm-media reveal">
+      <img src="assets/images/miniPc/npm_dashboard.png" alt="Tableau de bord Nginx Proxy Manager" id="img-npm-alt" loading="lazy" decoding="async">
+      <div class="image-caption" data-i18n="npm_caption">Configuration de Nginx Proxy Manager : gestion du routage DNS et génération automatisée de certificats SSL Let's Encrypt.</div>
+    </div>
+  </section>
+
+  <!-- FILTRAGE DNS -->
+  <section id="dns">
+    <div class="reveal">
+      <span class="eyebrow" data-i18n="dns_eyebrow">Réseau & Confidentialité</span>
+      <h2 data-i18n="dns_title">Filtrage DNS du réseau.</h2>
+      <p class="lead" data-i18n="dns_lead">Un serveur DNS maison qui bloque publicités, trackers et domaines malveillants pour tous les appareils du foyer, sans rien installer sur chacun d'eux.</p>
+    </div>
+
+    <!-- Schéma SVG -->
+    <div class="media-container arch-svg reveal delay-1">
+      <svg viewBox="0 0 900 270" role="img" aria-label="Schéma du filtrage DNS : appareils, AdGuard Home, Unbound, Internet">
+        <defs>
+          <marker id="arrow-dns" markerWidth="8" markerHeight="8" refX="6" refY="3" orient="auto"><path d="M0,0 L6,3 L0,6 Z" fill="#86868b"/></marker>
+        </defs>
+        <g font-family="Inter, sans-serif" text-anchor="middle">
+          <rect x="245" y="12" width="470" height="108" stroke-dasharray="4 4" />
+          <text x="480" y="138" font-size="11" letter-spacing="1.3">ORANGE PI ZERO 3</text>
+
+          <rect x="20" y="34" width="190" height="66" />
+          <text x="115" y="62" font-size="14" fill="#f5f5f7" data-i18n="svg_dns_devices">Appareils du réseau</text>
+          <text x="115" y="81" font-size="11" data-i18n="svg_dns_devices_sub">PC, mobiles, TV</text>
+
+          <rect x="260" y="34" width="200" height="66" />
+          <text x="360" y="62" font-size="14" fill="#f5f5f7">AdGuard Home</text>
+          <text x="360" y="81" font-size="11" data-i18n="svg_dns_filter_sub">Filtrage + DHCP</text>
+
+          <rect x="510" y="34" width="190" height="66" />
+          <text x="605" y="62" font-size="14" fill="#f5f5f7">Unbound</text>
+          <text x="605" y="81" font-size="11" data-i18n="svg_dns_resolver_sub">Résolveur DNSSEC</text>
+
+          <rect x="750" y="34" width="130" height="66" />
+          <text x="815" y="62" font-size="14" fill="#f5f5f7">Internet</text>
+          <text x="815" y="81" font-size="11" data-i18n="svg_dns_internet_sub">DNS racine</text>
+
+          <path d="M210 67 H255" fill="none" marker-end="url(#arrow-dns)"/>
+          <path d="M460 67 H505" fill="none" marker-end="url(#arrow-dns)"/>
+          <path d="M700 67 H745" fill="none" marker-end="url(#arrow-dns)"/>
+
+          <rect x="20" y="170" width="190" height="66" />
+          <text x="115" y="198" font-size="14" fill="#f5f5f7" data-i18n="svg_dns_remote">Appareils nomades</text>
+          <text x="115" y="217" font-size="11" data-i18n="svg_dns_remote_sub">Via Tailscale</text>
+
+          <path d="M210 203 H360 V104" stroke-dasharray="4 4" fill="none" marker-end="url(#arrow-dns)"/>
+        </g>
+      </svg>
+    </div>
+
+    <div class="bento-grid">
+      <div class="bento-card wide reveal">
+        <span class="tag green" data-i18n="tag_lan">Réseau local & VPN</span>
+        <h3>AdGuard Home</h3>
+        <p data-i18n="dns_adguard_desc">Serveur DNS et DHCP de mon réseau. Il bloque publicités, trackers, télémétrie et domaines malveillants pour tous mes appareils, et attribue des adresses fixes à mes services grâce aux baux statiques.</p>
+      </div>
+      <div class="bento-card reveal delay-1">
+        <h3>Unbound</h3>
+        <p data-i18n="dns_unbound_desc">Résolveur récursif local avec validation DNSSEC : mes requêtes ne dépendent d'aucun DNS public tiers.</p>
+      </div>
+      <div class="bento-card reveal">
+        <h3 data-i18n="dns_lists_title">Listes de blocage HaGeZi</h3>
+        <p data-i18n="dns_lists_desc">Listes maintenues par la communauté (publicités, trackers, menaces), mises à jour automatiquement. Les faux positifs sont corrigés avec une liste d'autorisation.</p>
+      </div>
+      <div class="bento-card reveal delay-1">
+        <h3 data-i18n="dns_ts_title">Filtrage en déplacement</h3>
+        <p data-i18n="dns_ts_desc">Mes appareils nomades utilisent ce DNS à travers Tailscale, avec une politique d'accès (ACL) qui n'autorise que le port DNS vers le serveur.</p>
+      </div>
+      <div class="bento-card reveal delay-2">
+        <h3 data-i18n="dns_hw_title">Matériel sobre</h3>
+        <p data-i18n="dns_hw_desc">Le tout tourne sur un Orange Pi Zero 3 d'1 Go de RAM : environ 150 Mo pour AdGuard Home avec plus de 500 000 règles chargées.</p>
+      </div>
+    </div>
+  </section>
+
+  <!-- SÉCURITÉ -->
+  <section id="securite">
+    <div class="reveal">
+      <span class="eyebrow" data-i18n="sec_eyebrow">Bonnes pratiques</span>
+      <h2 data-i18n="sec_title">Mes mesures de sécurité.</h2>
+      <p class="lead" data-i18n="sec_lead">Gérer un serveur connecté à internet implique des risques. Voici les règles que je m'impose.</p>
+    </div>
+
+    <ul class="clean-list reveal delay-1">
+      <li>
+        <strong data-i18n="sec_zt_title">Réseau Zero-Trust (Tailscale)</strong>
+        <span data-i18n="sec_zt_desc">Je n'ouvre aucun port d'administration (SSH, Proxmox) sur ma box internet. Tout accès distant nécessite une connexion à mon tunnel VPN WireGuard.</span>
+      </li>
+      <li>
+        <strong data-i18n="sec_f2b_title">Prévention d'intrusions (Fail2ban)</strong>
+        <span data-i18n="sec_f2b_desc">J'ai configuré Fail2ban pour bannir automatiquement les adresses IP qui tenteraient de forcer l'accès (brute-force) à mes services exposés.</span>
+      </li>
+      <li>
+        <strong data-i18n="sec_mfa_title">MFA & Gestion des accès</strong>
+        <span data-i18n="sec_mfa_desc">J'impose une double authentification (TOTP) sur tous mes panneaux de contrôle et l'accès Root par mot de passe est désactivé au profit de clés SSH privées.</span>
+      </li>
+      <li>
+        <strong data-i18n="sec_dns_title">Durcissement du serveur DNS</strong>
+        <span data-i18n="sec_dns_desc">Le serveur DNS n'est joignable que depuis mon réseau local et mon VPN grâce à un pare-feu UFW restrictif. La connexion SSH se fait uniquement par clé et les mises à jour de sécurité s'installent automatiquement.</span>
+      </li>
+    </ul>
+  </section>
+
+  <!-- SUPERVISION -->
+  <section id="supervision">
+    <div class="reveal">
+      <span class="eyebrow" data-i18n="mon_eyebrow">Observabilité</span>
+      <h2 data-i18n="mon_title">Supervision du matériel.</h2>
+      <p class="body-text" data-i18n="mon_desc">J'utilise l'API de Proxmox couplée à <strong>Beszel</strong> pour monitorer la santé de ma machine au quotidien (CPU, RAM, état des disques, températures).</p>
+    </div>
+
+    <!-- Image Beszel -->
+    <div class="media-container monitoring-media reveal delay-1">
+      <img src="assets/images/miniPc/monitor_dashboard.png" alt="Tableau de bord de monitoring Beszel" id="img-beszel-alt" loading="lazy" decoding="async">
+      <div class="image-caption" data-i18n="mon_caption">Surveillance en temps réel des charges système, du réseau et de l'espace disque via Beszel.</div>
+    </div>
+  </section>
+
+  <!-- FUTUR & APPRENTISSAGES -->
+  <section id="futur" class="section-left">
+    <div class="reveal">
+      <span class="eyebrow" data-i18n="fut_eyebrow">Mes prochains projets</span>
+      <h2 data-i18n="fut_title">Évolutions prévues.</h2>
+      <p class="body-text" data-i18n="fut_desc">Mon infrastructure est mon terrain de jeu. Voici ce que je compte y intégrer prochainement :</p>
+    </div>
+
+    <div class="bento-grid">
+      <div class="bento-card wide reveal">
+        <h3 data-i18n="fut_vps_title">Serveur Relais (VPS)</h3>
+        <p data-i18n="fut_vps_desc">Je souhaite acquérir un VPS distant qui fera office de bouclier, afin de masquer définitivement mon adresse IP résidentielle lorsque j'expose un service.</p>
+      </div>
+      <div class="bento-card reveal delay-2">
+        <h3 data-i18n="fut_nas_title">NAS Personnel</h3>
+        <p data-i18n="fut_nas_desc">Je compte installer TrueNAS et configurer une grappe RAID de 2 disques (4 To) pour mieux comprendre la redondance matérielle et sécuriser les données familiales.</p>
+      </div>
+      <div class="bento-card reveal">
+        <h3 data-i18n="fut_hw_title">Mise à niveau matérielle</h3>
+        <p data-i18n="fut_hw_desc">J'ai prévu de doubler la mémoire vive de mon serveur (passage à 64 Go) et d'ajouter des disques NVMe pour supporter la charge de mes futurs conteneurs.</p>
+      </div>
+      <div class="bento-card wide reveal delay-1">
+        <h3 data-i18n="fut_ai_title">Infrastructure IA</h3>
+        <p data-i18n="fut_ai_desc">Je m'intéresse de plus en plus à l'hébergement local de modèles de langage (LLM). Je souhaite dédier une partie de mes ressources pour expérimenter avec Ollama.</p>
+      </div>
+    </div>
+
+  </section>
+</main>
+
+<footer>
+  <p><span data-i18n="footer_text">Conçu et administré par Liandro Gameiro da Silva — HEG-Genève</span> · <span id="year">2026</span></p>
+  <div class="footer-links" aria-label="Réseaux professionnels">
+    <a href="https://www.linkedin.com/in/lndr/" target="_blank" rel="noopener noreferrer" data-i18n="footer_linkedin">LinkedIn</a>
+    <a href="https://github.com/WalV1x/" target="_blank" rel="noopener noreferrer" data-i18n="footer_github">GitHub</a>
+  </div>
+</footer>
+<a class="back-to-top" href="#hero" aria-label="Retour en haut">↑</a>
+
+<!-- Script pour les animations au scroll et la traduction -->
+<script src="assets/js/script.js" defer></script>
 </body>
 </html>
